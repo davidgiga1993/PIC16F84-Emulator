@@ -32,6 +32,8 @@
             this.containerToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.newChildToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
+            this.schließenToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
             // menuStrip1
@@ -59,6 +61,19 @@
             this.newChildToolStripMenuItem.Text = "New Child...";
             this.newChildToolStripMenuItem.Click += new System.EventHandler(this.newChildToolStripMenuItem_Click);
             // 
+            // 
+            // öffnenToolStripMenuItem
+            // 
+            this.öffnenToolStripMenuItem.Name = "öffnenToolStripMenuItem";
+            this.öffnenToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.öffnenToolStripMenuItem.Text = "Öffnen";
+            // 
+            // schließenToolStripMenuItem
+            // 
+            this.schließenToolStripMenuItem.Name = "schließenToolStripMenuItem";
+            this.schließenToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.schließenToolStripMenuItem.Text = "Schließen";
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -82,6 +97,8 @@
         private System.Windows.Forms.MenuStrip menuStrip1;
         private System.Windows.Forms.ToolStripMenuItem containerToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem newChildToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem öffnenToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem schließenToolStripMenuItem;
     }
 }
 

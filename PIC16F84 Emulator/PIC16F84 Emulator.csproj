@@ -50,6 +50,11 @@
     <Compile Include="Form1.Designer.cs">
       <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
+    <Compile Include="PIC\Data\DataAdapter.cs" />
+    <Compile Include="PIC\Data\Helper.cs" />
+    <Compile Include="PIC\PIC.cs" />
+    <Compile Include="PIC\Register\Register.cs" />
+    <Compile Include="PIC\Register\RegisterFileMap.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Register.cs">
