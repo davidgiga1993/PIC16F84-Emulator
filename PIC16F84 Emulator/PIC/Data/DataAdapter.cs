@@ -20,7 +20,7 @@ namespace PIC16F84_Emulator.PIC.Data
             }
             set
             {
-                Value = value;
+                _Data = value;
                 if (DataChanged != null)
                     DataChanged(value, this);
             }
