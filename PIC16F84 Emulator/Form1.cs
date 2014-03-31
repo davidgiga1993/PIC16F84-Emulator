@@ -21,11 +21,13 @@ namespace PIC16F84_Emulator
 
         }
 
-        private void newChildToolStripMenuItem_Click(object sender, EventArgs e)
+        PIC.Data.DataAdapter<byte> Test = new PIC.Data.DataAdapter<byte>();
+
+        private void toolStripMenuItem1_Click(object sender, EventArgs e)
         {
-            Form childForm = new Form();
-            childForm.MdiParent = this;
-            childForm.Show();
+            FormRegister R = new FormRegister(Test);
+            R.MdiParent = this;
+            R.Show();
         }
     }
 }

@@ -77,13 +77,13 @@
             // toolStripMenuItem2
             // 
             this.toolStripMenuItem2.Name = "toolStripMenuItem2";
-            this.toolStripMenuItem2.Size = new System.Drawing.Size(152, 22);
+            this.toolStripMenuItem2.Size = new System.Drawing.Size(125, 22);
             this.toolStripMenuItem2.Text = "Öffnen";
             // 
             // schließenToolStripMenuItem1
             // 
             this.schließenToolStripMenuItem1.Name = "schließenToolStripMenuItem1";
-            this.schließenToolStripMenuItem1.Size = new System.Drawing.Size(152, 22);
+            this.schließenToolStripMenuItem1.Size = new System.Drawing.Size(125, 22);
             this.schließenToolStripMenuItem1.Text = "Schließen";
             // 
             // toolStripMenuItem1
@@ -91,6 +91,7 @@
             this.toolStripMenuItem1.Name = "toolStripMenuItem1";
             this.toolStripMenuItem1.Size = new System.Drawing.Size(24, 20);
             this.toolStripMenuItem1.Text = "?";
+            this.toolStripMenuItem1.Click += new System.EventHandler(this.toolStripMenuItem1_Click);
             // 
             // Form1
             // 
