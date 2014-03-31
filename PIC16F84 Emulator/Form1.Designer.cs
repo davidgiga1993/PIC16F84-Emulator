@@ -28,51 +28,69 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.containerToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.newChildToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.menuStrip1.SuspendLayout();
             this.schließenToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.menuStrip1 = new System.Windows.Forms.MenuStrip();
+            this.dateiToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripMenuItem2 = new System.Windows.Forms.ToolStripMenuItem();
+            this.schließenToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
-            // menuStrip1
-            // 
-            this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.containerToolStripMenuItem});
-            this.menuStrip1.Location = new System.Drawing.Point(0, 0);
-            this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(844, 24);
-            this.menuStrip1.TabIndex = 1;
-            this.menuStrip1.Text = "menuStrip1";
-            // 
             // containerToolStripMenuItem
             // 
-            this.containerToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.newChildToolStripMenuItem});
             this.containerToolStripMenuItem.Name = "containerToolStripMenuItem";
-            this.containerToolStripMenuItem.Size = new System.Drawing.Size(71, 20);
-            this.containerToolStripMenuItem.Text = "Container";
+            this.containerToolStripMenuItem.Size = new System.Drawing.Size(32, 19);
             // 
             // newChildToolStripMenuItem
             // 
             this.newChildToolStripMenuItem.Name = "newChildToolStripMenuItem";
-            this.newChildToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
-            this.newChildToolStripMenuItem.Text = "New Child...";
-            this.newChildToolStripMenuItem.Click += new System.EventHandler(this.newChildToolStripMenuItem_Click);
-            // 
-            // 
-            // öffnenToolStripMenuItem
-            // 
-            this.öffnenToolStripMenuItem.Name = "öffnenToolStripMenuItem";
-            this.öffnenToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
-            this.öffnenToolStripMenuItem.Text = "Öffnen";
+            this.newChildToolStripMenuItem.Size = new System.Drawing.Size(32, 19);
             // 
             // schließenToolStripMenuItem
             // 
             this.schließenToolStripMenuItem.Name = "schließenToolStripMenuItem";
-            this.schließenToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
-            this.schließenToolStripMenuItem.Text = "Schließen";
+            this.schließenToolStripMenuItem.Size = new System.Drawing.Size(32, 19);
+            // 
+            // menuStrip1
+            // 
+            this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.dateiToolStripMenuItem,
+            this.toolStripMenuItem1});
+            this.menuStrip1.Location = new System.Drawing.Point(0, 0);
+            this.menuStrip1.Name = "menuStrip1";
+            this.menuStrip1.Size = new System.Drawing.Size(844, 24);
+            this.menuStrip1.TabIndex = 2;
+            this.menuStrip1.Text = "menuStrip1";
+            // 
+            // dateiToolStripMenuItem
+            // 
+            this.dateiToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.toolStripMenuItem2,
+            this.schließenToolStripMenuItem1});
+            this.dateiToolStripMenuItem.Name = "dateiToolStripMenuItem";
+            this.dateiToolStripMenuItem.Size = new System.Drawing.Size(46, 20);
+            this.dateiToolStripMenuItem.Text = "Datei";
+            // 
+            // toolStripMenuItem2
+            // 
+            this.toolStripMenuItem2.Name = "toolStripMenuItem2";
+            this.toolStripMenuItem2.Size = new System.Drawing.Size(152, 22);
+            this.toolStripMenuItem2.Text = "Öffnen";
+            // 
+            // schließenToolStripMenuItem1
+            // 
+            this.schließenToolStripMenuItem1.Name = "schließenToolStripMenuItem1";
+            this.schließenToolStripMenuItem1.Size = new System.Drawing.Size(152, 22);
+            this.schließenToolStripMenuItem1.Text = "Schließen";
+            // 
+            // toolStripMenuItem1
+            // 
+            this.toolStripMenuItem1.Name = "toolStripMenuItem1";
+            this.toolStripMenuItem1.Size = new System.Drawing.Size(24, 20);
+            this.toolStripMenuItem1.Text = "?";
             // 
             // Form1
             // 
@@ -81,7 +99,6 @@
             this.ClientSize = new System.Drawing.Size(844, 540);
             this.Controls.Add(this.menuStrip1);
             this.IsMdiContainer = true;
-            this.MainMenuStrip = this.menuStrip1;
             this.Name = "Form1";
             this.Text = "PIC16F84 Emulator";
             this.Load += new System.EventHandler(this.Form1_Load);
@@ -94,11 +111,15 @@
 
         #endregion
 
-        private System.Windows.Forms.MenuStrip menuStrip1;
         private System.Windows.Forms.ToolStripMenuItem containerToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem newChildToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem öffnenToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem schließenToolStripMenuItem;
+        private System.Windows.Forms.MenuStrip menuStrip1;
+        private System.Windows.Forms.ToolStripMenuItem dateiToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem2;
+        private System.Windows.Forms.ToolStripMenuItem schließenToolStripMenuItem1;
+        private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem1;
     }
 }
 
