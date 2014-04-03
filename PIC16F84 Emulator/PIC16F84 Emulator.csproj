@@ -50,8 +50,19 @@
     <Compile Include="Form1.Designer.cs">
       <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
+    <Compile Include="FormSourcecode.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormSourcecode.Designer.cs">
+      <DependentUpon>FormSourcecode.cs</DependentUpon>
+    </Compile>
     <Compile Include="PIC\Data\DataAdapter.cs" />
     <Compile Include="PIC\Data\Helper.cs" />
+    <Compile Include="PIC\Data\SourceLine.cs" />
+    <Compile Include="PIC\Functions\AndWF.cs" />
+    <Compile Include="PIC\Functions\AddWF.cs" />
+    <Compile Include="PIC\Functions\BaseFunction.cs" />
+    <Compile Include="PIC\Functions\Clrf.cs" />
     <Compile Include="PIC\IO\BytecodeReader.cs" />
     <Compile Include="PIC\PIC.cs" />
     <Compile Include="PIC\Register\Register.cs" />
@@ -72,6 +83,9 @@
     </Compile>
     <EmbeddedResource Include="Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormSourcecode.resx">
+      <DependentUpon>FormSourcecode.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
