@@ -5,10 +5,10 @@ using System.Text;
 
 namespace PIC16F84_Emulator.PIC.Functions
 {
-    class ClrF : BaseFunction
+    class MovWF : BaseFunction
     {
-        public ClrF()
-            : base(0x180, 1)
+        public MovWF()
+            : base(0x80, 1)
         {
 
         }
@@ -17,10 +17,7 @@ namespace PIC16F84_Emulator.PIC.Functions
         {
             int Command = Line.Command & ~Bitmask;
             int RegAddress = Command & 0x7F;
-
-            byte NewValue = 0;
-            Pic.RegisterMap.SetZBit(true);
-            Pic.RegisterMap.Set(NewValue, RegAddress);
+            Pic.RegisterMap.Set(Pic.WRegister.Value, RegAddress);
         }
     }
 }

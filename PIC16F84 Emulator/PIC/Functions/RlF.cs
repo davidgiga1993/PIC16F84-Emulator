@@ -5,18 +5,16 @@ using System.Text;
 
 namespace PIC16F84_Emulator.PIC.Functions
 {
-    class AddWF : BaseDAddressFunction
+    class RlF : BaseDAddressFunction
     {
-        public AddWF() : base(0x700, 1, true)
+        public RlF() : base(0xD00, 1, false)
         {
-
         }
 
         public override byte Calculate(PIC Pic, Data.SourceLine Line, byte Value)
         {
-            int NewValue = Pic.WRegister.Value + Value;
-            Pic.RegisterMap.SetCBit(NewValue > 255);
-            Pic.RegisterMap.SetDCBit(NewValue > 15);
+            int NewValue = Value << 1;
+            Pic.RegisterMap.SetCBit((NewValue & 0x100) == 1);
             return (byte)NewValue;
         }
     }

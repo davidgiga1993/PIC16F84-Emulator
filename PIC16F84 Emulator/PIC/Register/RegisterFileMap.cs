@@ -8,10 +8,23 @@ namespace PIC16F84_Emulator.PIC.Register
 {
     public class RegisterFileMap
     {
-        protected DataAdapter<byte>[] Data;
+        private static readonly int REG_STATUS_ADDRESS = 0x3;
+        private static readonly int REG_C_BIT = 0;
+        private static readonly int REG_DC_BIT = 1;
+        private static readonly int REG_Z_BIT = 2;
 
+        protected DataAdapter<byte>[] Data;
+        /// <summary>
+        /// Speichert die Zuordnung von Adresse auf reelle Speicheradresse.
+        /// Dadurch können verschiedene Adressen auf die gleiche Speicherstelle gemappt werden.
+        /// Wird beispielsweise für das Status Register verwendet (Adresse 0x3 und 0x83)
+        /// </summary>
         protected int[] Mapping;
 
+        /// <summary>
+        /// Initialisiert die Daten im Register
+        /// Die Startwerte wurden dem Datenblatt entnommen        
+        /// </summary>
         public RegisterFileMap()
         {
             Mapping = new int[256];
@@ -59,16 +72,62 @@ namespace PIC16F84_Emulator.PIC.Register
             Set(0x81, 255);
         }
 
+        /// <summary>
+        /// Setzt das Z Bit
+        /// </summary>
+        /// <param name="On">Z Bit an oder aus</param>
         public void SetZBit(bool On)
         {
-            byte Register = Get(0x3);
+            byte Register = Get(REG_STATUS_ADDRESS);
             if (On)
-                Register = Helper.SetBit(2, Register);
+                Register = Helper.SetBit(REG_Z_BIT, Register);
             else
-                Register = Helper.UnsetBit(2, Register);
-            Set(Register, 0x3);
+                Register = Helper.UnsetBit(REG_Z_BIT, Register);
+            Set(Register, REG_STATUS_ADDRESS);
         }
 
+        /// <summary>
+        /// Setzt das Carry Bit
+        /// </summary>
+        /// <param name="On">Carry an oder aus</param>
+        public void SetCBit(bool On)
+        {
+            byte Register = Get(REG_STATUS_ADDRESS);
+            if (On)
+                Register = Helper.SetBit(REG_C_BIT, Register);
+            else
+                Register = Helper.UnsetBit(REG_C_BIT, Register);
+            Set(Register, REG_STATUS_ADDRESS);
+        }
+
+        /// <summary>
+        /// Gibt das Carry Bit zurück
+        /// </summary>
+        /// <returns>True wenn Carry gesetzt</returns>
+        public bool GetCBit()
+        {
+            return Helper.CheckBit(REG_C_BIT, Get(REG_STATUS_ADDRESS));
+               
+        }
+
+        /// <summary>
+        /// Setzt das Digital Carry Bit
+        /// </summary>
+        /// <param name="On">Digital Carry an oder aus</param>
+        public void SetDCBit(bool On)
+        {
+            byte Register = Get(REG_STATUS_ADDRESS);
+            if (On)
+                Register = Helper.SetBit(REG_DC_BIT, Register);
+            else
+                Register = Helper.UnsetBit(REG_DC_BIT, Register);
+            Set(Register, REG_STATUS_ADDRESS);
+        }
+        /// <summary>
+        /// Setzt ein Register an der gegebenen Adresse
+        /// </summary>
+        /// <param name="Data">Daten fürs Register</param>
+        /// <param name="Position">Register Adresse</param>
         public void Set(byte Data, int Position)
         {
             if (IsBank1())
@@ -79,6 +138,11 @@ namespace PIC16F84_Emulator.PIC.Register
             this.Data[Position].Value = Data;
         }
 
+        /// <summary>
+        /// Gibt ein Register zurück
+        /// </summary>
+        /// <param name="Position">Register Adresse</param>
+        /// <returns>Register Daten</returns>
         public byte Get(int Position)
         {
             if (IsBank1())
@@ -88,6 +152,10 @@ namespace PIC16F84_Emulator.PIC.Register
             return Data[Position].Value;
         }
 
+        /// <summary>
+        /// Wird benutzt um zu prüfen ob Bank 1 aktiv ist
+        /// </summary>
+        /// <returns>True wenn Bank 1 aktiv ist</returns>
         public bool IsBank1()
         {
             return (Data[2].Value & (1 << 5)) != 0;

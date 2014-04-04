@@ -5,17 +5,17 @@ using System.Text;
 
 namespace PIC16F84_Emulator.PIC.Functions
 {
-    class AndWF : BaseDAddressFunction
+    class IncF : BaseDAddressFunction
     {
-        public AndWF()
-            : base(0x500, 1, true)
+        public IncF()
+            : base(0xA00, 1, true)
         {
 
         }
 
         public override byte Calculate(PIC Pic, Data.SourceLine Line, byte Value)
         {
-            return (byte)(Pic.WRegister.Value & Value);
+            return (byte)(Value + 1);
         }
     }
 }

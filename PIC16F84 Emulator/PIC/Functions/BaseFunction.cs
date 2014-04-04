@@ -17,7 +17,7 @@ namespace PIC16F84_Emulator.PIC.Functions
             this.Cycles = Cycles;
         }
 
-        public bool Match(SourceLine Line)
+        public virtual bool Match(SourceLine Line)
         {
             return ((Line.Command & Bitmask) != 0);
         }

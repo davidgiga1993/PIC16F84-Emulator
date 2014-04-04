@@ -18,5 +18,10 @@ namespace PIC16F84_Emulator.PIC.Data
             Data &= (byte)~(1 << Position);
             return Data;
         }
+
+        public static bool CheckBit(int Position, byte Data)
+        {
+            return (Data & 1 << Position) != 0;
+        }
     }
 }
