@@ -35,13 +35,22 @@ namespace PIC16F84_Emulator
                 {
                     DataAdapter<byte> Adapter = Pic.RegisterMap.GetAdapter(X + Y);
                     BindTextBoxHex T = new BindTextBoxHex();
-                    T.EnableDetailForm = true;
-                    T.EnableChangeColor = true;
+                    T.BindDoubleclick += T_BindDoubleclick;                    
+                    T.ID = (Y + X).ToString("X2");
                     T.Width = 20;
                     T.Bind(Adapter);
+                    T.EnableChangeColor = true;
                     tableLayoutPanel1.Controls.Add(T, Y + 1, X + 1);
                 }
             }
+        }
+
+        private void T_BindDoubleclick(DataAdapter<byte> Adapter, string ID)
+        {
+            FormRegister Reg = new FormRegister(Adapter);
+            Reg.Text = "Register " + ID;
+            Reg.MdiParent = MdiParent;
+            Reg.Show();
         }
 
         private void AddHeader()

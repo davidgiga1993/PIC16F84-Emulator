@@ -8,8 +8,10 @@ using PIC16F84_Emulator.PIC.Data;
 namespace PIC16F84_Emulator.UIElements
 {
     class BindTextBoxHex : TextBox
-    {        
-        public bool EnableDetailForm;
+    {
+        public delegate void OnBindDoubleclick(DataAdapter<byte> Adapter, string ID);
+        public event OnBindDoubleclick BindDoubleclick;
+
         public bool EnableChangeColor
         {
             get
@@ -34,6 +36,8 @@ namespace PIC16F84_Emulator.UIElements
             }
         }
 
+        public string ID;
+
         private bool _EnableChangeColor;
 
         private DataAdapter<byte> Adapter;
@@ -47,11 +51,8 @@ namespace PIC16F84_Emulator.UIElements
         protected override void OnDoubleClick(EventArgs e)
         {
             base.OnDoubleClick(e);
-            if(EnableDetailForm)
-            {
-                FormRegister Reg = new FormRegister(Adapter);
-                Reg.ShowDialog();
-            }
+            if (BindDoubleclick != null)
+                BindDoubleclick(Adapter, ID);
         }
 
         public void Bind(DataAdapter<byte> Adapter)
