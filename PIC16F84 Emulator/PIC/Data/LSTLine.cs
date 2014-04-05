@@ -8,7 +8,7 @@ namespace PIC16F84_Emulator.PIC.Data
     /// <summary>
     /// Stellt eine geparste Zeile der lst Datei dar.
     /// </summary>
-    public class SourceLine
+    public class LSTLine
     {
         public string Source;
         public bool ContainsBytecode;
@@ -20,7 +20,7 @@ namespace PIC16F84_Emulator.PIC.Data
         /// Parst die übergebene Zeile
         /// </summary>
         /// <param name="Source">Zeile aus der lst Datei</param>
-        public SourceLine(string Source)
+        public LSTLine(string Source)
         {
 
             if (Source.StartsWith(" ")) // Zeile fängt mit Leerzeichen an -> Kein Bytecode in der Datei, nur Quellcode

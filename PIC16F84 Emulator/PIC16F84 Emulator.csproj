@@ -50,15 +50,33 @@
     <Compile Include="Form1.Designer.cs">
       <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
+    <Compile Include="FormDataOverview.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormDataOverview.Designer.cs">
+      <DependentUpon>FormDataOverview.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FormIORegister.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormIORegister.Designer.cs">
+      <DependentUpon>FormIORegister.cs</DependentUpon>
+    </Compile>
     <Compile Include="FormSourcecode.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="FormSourcecode.Designer.cs">
       <DependentUpon>FormSourcecode.cs</DependentUpon>
     </Compile>
+    <Compile Include="PIC\Data\BytecodeLine.cs" />
     <Compile Include="PIC\Data\DataAdapter.cs" />
     <Compile Include="PIC\Data\Helper.cs" />
-    <Compile Include="PIC\Data\SourceLine.cs" />
+    <Compile Include="PIC\Data\LSTLine.cs" />
+    <Compile Include="PIC\Data\SourceCodeLine.cs" />
+    <Compile Include="PIC\Data\StackData.cs" />
+    <Compile Include="PIC\Functions\AddLW.cs" />
+    <Compile Include="PIC\Functions\AndLW.cs" />
+    <Compile Include="PIC\Functions\BaseLiteralFunction.cs" />
     <Compile Include="PIC\Functions\AndWF.cs" />
     <Compile Include="PIC\Functions\AddWF.cs" />
     <Compile Include="PIC\Functions\BaseBitFunction.cs" />
@@ -68,21 +86,30 @@
     <Compile Include="PIC\Functions\BsF.cs" />
     <Compile Include="PIC\Functions\BtFSS.cs" />
     <Compile Include="PIC\Functions\BtFSC.cs" />
+    <Compile Include="PIC\Functions\Goto.cs" />
+    <Compile Include="PIC\Functions\Call.cs" />
     <Compile Include="PIC\Functions\ClrW.cs" />
     <Compile Include="PIC\Functions\ClrF.cs" />
+    <Compile Include="PIC\Functions\ClrWdt.cs" />
     <Compile Include="PIC\Functions\ComF.cs" />
     <Compile Include="PIC\Functions\DecF.cs" />
     <Compile Include="PIC\Functions\DecFSZ.cs" />
     <Compile Include="PIC\Functions\IncF.cs" />
     <Compile Include="PIC\Functions\IncFSZ.cs" />
-    <Compile Include="PIC\Functions\IorWF.cs" />
+    <Compile Include="PIC\Functions\IOrLW.cs" />
+    <Compile Include="PIC\Functions\IOrWF.cs" />
     <Compile Include="PIC\Functions\MovF.cs" />
+    <Compile Include="PIC\Functions\MovLW.cs" />
     <Compile Include="PIC\Functions\MovWF.cs" />
     <Compile Include="PIC\Functions\NOP.cs" />
+    <Compile Include="PIC\Functions\RetLW.cs" />
+    <Compile Include="PIC\Functions\Return.cs" />
     <Compile Include="PIC\Functions\RlF.cs" />
     <Compile Include="PIC\Functions\RrF.cs" />
+    <Compile Include="PIC\Functions\SubLW.cs" />
     <Compile Include="PIC\Functions\SubWF.cs" />
     <Compile Include="PIC\Functions\SwapF.cs" />
+    <Compile Include="PIC\Functions\XOrLW.cs" />
     <Compile Include="PIC\Functions\XOrWF.cs" />
     <Compile Include="PIC\IO\BytecodeReader.cs" />
     <Compile Include="PIC\PIC.cs" />
@@ -102,8 +129,18 @@
     <Compile Include="UIElements\BindTextBoxHex.cs">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="UIElements\BindTrisLabel.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="UIElements\Dialogs.cs" />
     <EmbeddedResource Include="Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormDataOverview.resx">
+      <DependentUpon>FormDataOverview.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormIORegister.resx">
+      <DependentUpon>FormIORegister.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="FormSourcecode.resx">
       <DependentUpon>FormSourcecode.cs</DependentUpon>

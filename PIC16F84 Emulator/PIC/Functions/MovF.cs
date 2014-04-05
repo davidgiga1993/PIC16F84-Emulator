@@ -8,12 +8,12 @@ namespace PIC16F84_Emulator.PIC.Functions
     class MovF : BaseDAddressFunction
     {
         public MovF()
-            : base(0x800, 1, true)
+            : base(0x8, 8, 1, true)
         {
 
         }
 
-        public override byte Calculate(PIC Pic, Data.SourceLine Line, byte Value)
+        public override byte Calculate(PIC Pic, Data.BytecodeLine Line, byte Value)
         {
             return Value;
         }

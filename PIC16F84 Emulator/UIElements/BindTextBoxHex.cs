@@ -8,12 +8,50 @@ using PIC16F84_Emulator.PIC.Data;
 namespace PIC16F84_Emulator.UIElements
 {
     class BindTextBoxHex : TextBox
-    {
-        DataAdapter<byte> Adapter;
+    {        
+        public bool EnableDetailForm;
+        public bool EnableChangeColor
+        {
+            get
+            {
+                return _EnableChangeColor;
+            }
+            set
+            {
+                if (value)
+                {
+                    ColorResetTimer = new Timer();
+                    ColorResetTimer.Interval = 1000;
+                    ColorResetTimer.Tick += T_Tick;
+                }
+                else
+                {
+                    if (ColorResetTimer != null)
+                        ColorResetTimer.Stop();
+                    ColorResetTimer = null;
+                }
+                _EnableChangeColor = value;
+            }
+        }
+
+        private bool _EnableChangeColor;
+
+        private DataAdapter<byte> Adapter;
+        private Timer ColorResetTimer;
 
         public BindTextBoxHex()
         {
             KeyDown+=BindTextBoxHex_KeyDown;
+        }
+
+        protected override void OnDoubleClick(EventArgs e)
+        {
+            base.OnDoubleClick(e);
+            if(EnableDetailForm)
+            {
+                FormRegister Reg = new FormRegister(Adapter);
+                Reg.ShowDialog();
+            }
         }
 
         public void Bind(DataAdapter<byte> Adapter)
@@ -42,6 +80,17 @@ namespace PIC16F84_Emulator.UIElements
         private void Adapter_DataChanged(byte Value, object Sender)
         {
             Text = Value.ToString("X2");
+            if(EnableChangeColor)
+            {
+                BackColor = System.Drawing.Color.FromArgb(255, 170, 170);
+                ColorResetTimer.Start();
+            }
+        }
+
+        private void T_Tick(object sender, EventArgs e)
+        {
+            BackColor = System.Drawing.Color.FromArgb(255, 255, 255, 255);
+            ColorResetTimer.Stop();
         }
     }
 }

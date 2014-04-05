@@ -5,15 +5,15 @@ using System.Text;
 
 namespace PIC16F84_Emulator.PIC.Functions
 {
-    class IorWF : BaseDAddressFunction
+    class IOrWF : BaseDAddressFunction
     {
-        public IorWF()
-            : base(0x400, 1, true)
+        public IOrWF()
+            : base(0x4, 8, 1, true)
         {
 
         }
 
-        public override byte Calculate(PIC Pic, Data.SourceLine Line, byte Value)
+        public override byte Calculate(PIC Pic, Data.BytecodeLine Line, byte Value)
         {
             return (byte)(Pic.WRegister.Value | Value);
         }

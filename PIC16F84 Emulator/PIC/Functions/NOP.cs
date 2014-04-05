@@ -9,18 +9,19 @@ namespace PIC16F84_Emulator.PIC.Functions
     class NOP : BaseFunction
     {
         public NOP()
-            : base(0x0, 1)
+            : base(0x0, 0, 1)
         {
 
         }
 
-        public override bool Match(SourceLine Line)
+        public override bool Match(BytecodeLine Line)
         {
             return (Line.Command == 0 || Line.Command == 0x20 || Line.Command == 0x40 || Line.Command == 0x60);            
         }
 
-        public override void Execute(PIC Pic, SourceLine Line)
+        public override void Execute(PIC Pic, BytecodeLine Line)
         {
+            Pic.RegisterMap.ProgrammCounter++;
         }
     }
 }

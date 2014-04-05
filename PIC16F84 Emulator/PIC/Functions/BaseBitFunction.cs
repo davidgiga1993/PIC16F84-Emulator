@@ -8,21 +8,23 @@ namespace PIC16F84_Emulator.PIC.Functions
 {
     abstract class BaseBitFunction : BaseFunction
     {
-        public BaseBitFunction(int Bitmask, int Cycles)
-            : base(Bitmask, Cycles)
+        public BaseBitFunction(int Bitmask, int BitmaskShift, int Cycles)
+            : base(Bitmask, BitmaskShift, Cycles)
         {
         }
 
-        public override void Execute(PIC Pic, SourceLine Line)
+        public override void Execute(PIC Pic, BytecodeLine Line)
         {
-            int Command = Line.Command & ~Bitmask;
+            int Command = Line.Command;
             int RegAddress = Command & 0x7F;
-            int BitPosition = (Command & 0x380) >> 7;
+            int BitPosition = (Command >> 7) & 0x7;
 
             byte Value = Pic.RegisterMap.Get(RegAddress);
             Value = Calculate(Pic, Line, Value, BitPosition);
 
             Pic.RegisterMap.Set(Value, RegAddress);
+
+            Pic.RegisterMap.ProgrammCounter++;
         }
 
         /// <summary>
@@ -33,6 +35,6 @@ namespace PIC16F84_Emulator.PIC.Functions
         /// <param name="Value">Ausgelesener Wert</param>
         /// <param name="BitPosition">Bit Position Parameter</param>
         /// <returns>Neuer Wert</returns>
-        public abstract byte Calculate(PIC Pic, SourceLine Line, byte Value, int BitPosition);
+        public abstract byte Calculate(PIC Pic, BytecodeLine Line, byte Value, int BitPosition);
     }
 }

@@ -17,19 +17,19 @@ namespace PIC16F84_Emulator.PIC.IO
         /// </summary>
         /// <param name="Filepath">Absoluter Dateipfad</param>
         /// <returns>Geparste Zeilen</returns>
-        public SourceLine[] ReadSourcecode(string Filepath)
+        public LSTLine[] ReadSourcecode(string Filepath)
         {
             StreamReader sr = new StreamReader(Filepath);
             string Data = sr.ReadToEnd();
             Data = Data.Replace('\r',' ');
             sr.Close();
             string[] Lines = Data.Split('\n');
-            List<SourceLine> ParsedLines = new List<SourceLine>();
+            List<LSTLine> ParsedLines = new List<LSTLine>();
             for (int X = 0; X < Lines.Length; X++)
             {
                 try
                 {
-                    SourceLine Line = new SourceLine(Lines[X]);
+                    LSTLine Line = new LSTLine(Lines[X]);
                     ParsedLines.Add(Line);
                 }
                 catch(Exception)

@@ -8,12 +8,12 @@ namespace PIC16F84_Emulator.PIC.Functions
     class DecF : BaseDAddressFunction
     {
         public DecF()
-            : base(0x300, 1, true)
+            : base(0x3, 8, 1, true)
         {
 
         }
 
-        public override byte Calculate(PIC Pic, Data.SourceLine Line, byte Value)
+        public override byte Calculate(PIC Pic, Data.BytecodeLine Line, byte Value)
         {
             return (byte)(Value - 1);
         }

@@ -10,12 +10,12 @@ namespace PIC16F84_Emulator.PIC.Functions
     {
 
         public BsF()
-            : base(0x1400, 1)
+            : base(0x5, 10, 1)
         {
 
         }
 
-        public override byte Calculate(PIC Pic, SourceLine Line, byte Value, int BitPosition)
+        public override byte Calculate(PIC Pic, BytecodeLine Line, byte Value, int BitPosition)
         {
             return Helper.SetBit(BitPosition, Value);
         }

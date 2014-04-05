@@ -9,14 +9,14 @@ namespace PIC16F84_Emulator.PIC.Functions
     abstract class BaseDAddressFunction : BaseFunction
     {
         private bool AffectsZFlag;
-        public BaseDAddressFunction(int Bitmask, int Cycles, bool AffectsZFlag) : base(Bitmask, Cycles)
+        public BaseDAddressFunction(int Bitmask, int BitmaskShift, int Cycles, bool AffectsZFlag) : base(Bitmask, BitmaskShift, Cycles)
         {
             this.AffectsZFlag = AffectsZFlag;
         }
 
-        public override void Execute(PIC Pic, SourceLine Line)
+        public override void Execute(PIC Pic, BytecodeLine Line)
         {
-            int Command = Line.Command & ~Bitmask;
+            int Command = Line.Command;
             int RegAddress = Command & 0x7F;
             bool D = (Command & 0x80) != 0;
 
@@ -36,6 +36,8 @@ namespace PIC16F84_Emulator.PIC.Functions
             {
                 Pic.WRegister.Value = Value;
             }
+
+            Pic.RegisterMap.ProgrammCounter++;
         }
 
         /// <summary>
@@ -45,6 +47,6 @@ namespace PIC16F84_Emulator.PIC.Functions
         /// <param name="Line"></param>
         /// <param name="Value">Ausgelesener Wert</param>
         /// <returns>Neuer Wert</returns>
-        public abstract byte Calculate(PIC Pic, SourceLine Line, byte Value);
+        public abstract byte Calculate(PIC Pic, BytecodeLine Line, byte Value);
     }
 }

@@ -10,12 +10,12 @@ namespace PIC16F84_Emulator.PIC.Functions
     {
 
         public BtFSC()
-            : base(0x1800, 1)
+            : base(0x6, 10, 1)
         {
 
         }
 
-        public override byte Calculate(PIC Pic, SourceLine Line, byte Value, int BitPosition)
+        public override byte Calculate(PIC Pic, BytecodeLine Line, byte Value, int BitPosition)
         {
             if(Helper.CheckBit(BitPosition, Value))
             {
@@ -24,6 +24,7 @@ namespace PIC16F84_Emulator.PIC.Functions
             else
             {
                 Cycles = 2;
+                Pic.RegisterMap.ProgrammCounter++; // Nächster Befehl muss übersprungen werden
             }
             return Value;
         }

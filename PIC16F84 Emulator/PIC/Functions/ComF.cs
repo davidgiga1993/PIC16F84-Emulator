@@ -8,12 +8,12 @@ namespace PIC16F84_Emulator.PIC.Functions
     class ComF : BaseDAddressFunction
     {
         public ComF()
-            : base(0x900, 1, true)
+            : base(0x9, 8, 1, true)
         {
 
         }
 
-        public override byte Calculate(PIC Pic, Data.SourceLine Line, byte Value)
+        public override byte Calculate(PIC Pic, Data.BytecodeLine Line, byte Value)
         {
             return (byte)~Value;
         }

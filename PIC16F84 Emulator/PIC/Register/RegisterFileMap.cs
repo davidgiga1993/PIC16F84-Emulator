@@ -9,10 +9,14 @@ namespace PIC16F84_Emulator.PIC.Register
     public class RegisterFileMap
     {
         private static readonly int REG_STATUS_ADDRESS = 0x3;
+        private static readonly int REG_PROGRAMCOUNTER_ADDRESS = 0x2;
         private static readonly int REG_C_BIT = 0;
         private static readonly int REG_DC_BIT = 1;
         private static readonly int REG_Z_BIT = 2;
 
+        /// <summary>
+        /// Stellt alle Register da
+        /// </summary>
         protected DataAdapter<byte>[] Data;
         /// <summary>
         /// Speichert die Zuordnung von Adresse auf reelle Speicheradresse.
@@ -26,7 +30,7 @@ namespace PIC16F84_Emulator.PIC.Register
         /// Die Startwerte wurden dem Datenblatt entnommen        
         /// </summary>
         public RegisterFileMap()
-        {
+        {   
             Mapping = new int[256];
             Data = new DataAdapter<byte>[256];
 
@@ -68,8 +72,10 @@ namespace PIC16F84_Emulator.PIC.Register
                 Data[X] = new DataAdapter<byte>();
             }
 
-            Set(0x3, 1 << 3 & 1 << 4);
-            Set(0x81, 255);
+            Set(1 << 3 | 1 << 4, 0x3);
+            Set(0xFF, 0x81);
+            Set(0xFF, 0x85);
+            Set(0xFF, 0x86);
         }
 
         /// <summary>
@@ -98,6 +104,30 @@ namespace PIC16F84_Emulator.PIC.Register
             else
                 Register = Helper.UnsetBit(REG_C_BIT, Register);
             Set(Register, REG_STATUS_ADDRESS);
+        }
+
+        /// <summary>
+        /// Stellt den Programmcounter da. Dieser wrapper wird benutzt um den Zugriff zu erleichtern
+        /// </summary>
+        /// <returns>Adresse im Programmcounter. Es wird int verwendet da der PC 13 bit groß ist</returns>
+        public int ProgrammCounter
+        {
+            get
+            {
+                return Get(REG_PROGRAMCOUNTER_ADDRESS);
+            }
+            set
+            {
+                Set((byte)value, REG_PROGRAMCOUNTER_ADDRESS);
+            }
+        }
+
+        public DataAdapter<byte> ProgrammCounterAdapter
+        {
+            get
+            {
+                return GetAdapter(REG_PROGRAMCOUNTER_ADDRESS);
+            }
         }
 
         /// <summary>
@@ -152,13 +182,27 @@ namespace PIC16F84_Emulator.PIC.Register
             return Data[Position].Value;
         }
 
+        public DataAdapter<byte> GetAdapter(int Position)
+        {
+            Position = Mapping[Position];
+            return Data[Position];
+        }
+
+        public int Length
+        {
+            get
+            {
+                return Data.Length;
+            }
+        }
+
         /// <summary>
         /// Wird benutzt um zu prüfen ob Bank 1 aktiv ist
         /// </summary>
         /// <returns>True wenn Bank 1 aktiv ist</returns>
         public bool IsBank1()
         {
-            return (Data[2].Value & (1 << 5)) != 0;
+            return (Data[3].Value & (1 << 5)) != 0;
         }
     }
 }

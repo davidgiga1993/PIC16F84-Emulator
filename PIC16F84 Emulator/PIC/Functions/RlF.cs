@@ -7,11 +7,11 @@ namespace PIC16F84_Emulator.PIC.Functions
 {
     class RlF : BaseDAddressFunction
     {
-        public RlF() : base(0xD00, 1, false)
+        public RlF() : base(0xD, 8, 1, false)
         {
         }
 
-        public override byte Calculate(PIC Pic, Data.SourceLine Line, byte Value)
+        public override byte Calculate(PIC Pic, Data.BytecodeLine Line, byte Value)
         {
             int NewValue = Value << 1;
             Pic.RegisterMap.SetCBit((NewValue & 0x100) == 1);

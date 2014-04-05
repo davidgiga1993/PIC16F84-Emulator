@@ -28,15 +28,6 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.checkBoxBit0 = new PIC16F84_Emulator.UIElements.BindCheckBox();
-            this.checkBoxBit3 = new PIC16F84_Emulator.UIElements.BindCheckBox();
-            this.checkBoxBit2 = new PIC16F84_Emulator.UIElements.BindCheckBox();
-            this.checkBoxBit1 = new PIC16F84_Emulator.UIElements.BindCheckBox();
-            this.checkBoxBit6 = new PIC16F84_Emulator.UIElements.BindCheckBox();
-            this.checkBoxBit5 = new PIC16F84_Emulator.UIElements.BindCheckBox();
-            this.checkBoxBit4 = new PIC16F84_Emulator.UIElements.BindCheckBox();
-            this.checkBoxBit7 = new PIC16F84_Emulator.UIElements.BindCheckBox();
-            this.textBoxHex = new PIC16F84_Emulator.UIElements.BindTextBoxHex();
             this.labelBit7 = new System.Windows.Forms.Label();
             this.labelBit6 = new System.Windows.Forms.Label();
             this.labelBit5 = new System.Windows.Forms.Label();
@@ -45,94 +36,16 @@
             this.labelBit2 = new System.Windows.Forms.Label();
             this.labelBit1 = new System.Windows.Forms.Label();
             this.labelBit0 = new System.Windows.Forms.Label();
+            this.textBoxHex = new PIC16F84_Emulator.UIElements.BindTextBoxHex();
+            this.checkBoxBit7 = new PIC16F84_Emulator.UIElements.BindCheckBox();
+            this.checkBoxBit4 = new PIC16F84_Emulator.UIElements.BindCheckBox();
+            this.checkBoxBit5 = new PIC16F84_Emulator.UIElements.BindCheckBox();
+            this.checkBoxBit6 = new PIC16F84_Emulator.UIElements.BindCheckBox();
+            this.checkBoxBit1 = new PIC16F84_Emulator.UIElements.BindCheckBox();
+            this.checkBoxBit2 = new PIC16F84_Emulator.UIElements.BindCheckBox();
+            this.checkBoxBit3 = new PIC16F84_Emulator.UIElements.BindCheckBox();
+            this.checkBoxBit0 = new PIC16F84_Emulator.UIElements.BindCheckBox();
             this.SuspendLayout();
-            // 
-            // checkBoxBit0
-            // 
-            this.checkBoxBit0.AutoSize = true;
-            this.checkBoxBit0.Location = new System.Drawing.Point(158, 54);
-            this.checkBoxBit0.Name = "checkBoxBit0";
-            this.checkBoxBit0.Size = new System.Drawing.Size(15, 14);
-            this.checkBoxBit0.TabIndex = 0;
-            this.checkBoxBit0.TextAlign = System.Drawing.ContentAlignment.TopCenter;
-            this.checkBoxBit0.UseVisualStyleBackColor = true;
-            // 
-            // checkBoxBit3
-            // 
-            this.checkBoxBit3.AutoSize = true;
-            this.checkBoxBit3.Location = new System.Drawing.Point(95, 54);
-            this.checkBoxBit3.Name = "checkBoxBit3";
-            this.checkBoxBit3.Size = new System.Drawing.Size(15, 14);
-            this.checkBoxBit3.TabIndex = 1;
-            this.checkBoxBit3.TextAlign = System.Drawing.ContentAlignment.TopCenter;
-            this.checkBoxBit3.UseVisualStyleBackColor = true;
-            // 
-            // checkBoxBit2
-            // 
-            this.checkBoxBit2.AutoSize = true;
-            this.checkBoxBit2.Location = new System.Drawing.Point(116, 54);
-            this.checkBoxBit2.Name = "checkBoxBit2";
-            this.checkBoxBit2.Size = new System.Drawing.Size(15, 14);
-            this.checkBoxBit2.TabIndex = 2;
-            this.checkBoxBit2.TextAlign = System.Drawing.ContentAlignment.TopCenter;
-            this.checkBoxBit2.UseVisualStyleBackColor = true;
-            // 
-            // checkBoxBit1
-            // 
-            this.checkBoxBit1.AutoSize = true;
-            this.checkBoxBit1.Location = new System.Drawing.Point(137, 54);
-            this.checkBoxBit1.Name = "checkBoxBit1";
-            this.checkBoxBit1.Size = new System.Drawing.Size(15, 14);
-            this.checkBoxBit1.TabIndex = 3;
-            this.checkBoxBit1.TextAlign = System.Drawing.ContentAlignment.TopCenter;
-            this.checkBoxBit1.UseVisualStyleBackColor = true;
-            // 
-            // checkBoxBit6
-            // 
-            this.checkBoxBit6.AutoSize = true;
-            this.checkBoxBit6.Location = new System.Drawing.Point(32, 54);
-            this.checkBoxBit6.Name = "checkBoxBit6";
-            this.checkBoxBit6.Size = new System.Drawing.Size(15, 14);
-            this.checkBoxBit6.TabIndex = 4;
-            this.checkBoxBit6.TextAlign = System.Drawing.ContentAlignment.TopCenter;
-            this.checkBoxBit6.UseVisualStyleBackColor = true;
-            // 
-            // checkBoxBit5
-            // 
-            this.checkBoxBit5.AutoSize = true;
-            this.checkBoxBit5.Location = new System.Drawing.Point(53, 54);
-            this.checkBoxBit5.Name = "checkBoxBit5";
-            this.checkBoxBit5.Size = new System.Drawing.Size(15, 14);
-            this.checkBoxBit5.TabIndex = 5;
-            this.checkBoxBit5.TextAlign = System.Drawing.ContentAlignment.TopCenter;
-            this.checkBoxBit5.UseVisualStyleBackColor = true;
-            // 
-            // checkBoxBit4
-            // 
-            this.checkBoxBit4.AutoSize = true;
-            this.checkBoxBit4.Location = new System.Drawing.Point(74, 54);
-            this.checkBoxBit4.Name = "checkBoxBit4";
-            this.checkBoxBit4.Size = new System.Drawing.Size(15, 14);
-            this.checkBoxBit4.TabIndex = 6;
-            this.checkBoxBit4.TextAlign = System.Drawing.ContentAlignment.TopCenter;
-            this.checkBoxBit4.UseVisualStyleBackColor = true;
-            // 
-            // checkBoxBit7
-            // 
-            this.checkBoxBit7.AutoSize = true;
-            this.checkBoxBit7.Location = new System.Drawing.Point(11, 54);
-            this.checkBoxBit7.Name = "checkBoxBit7";
-            this.checkBoxBit7.Size = new System.Drawing.Size(15, 14);
-            this.checkBoxBit7.TabIndex = 7;
-            this.checkBoxBit7.TextAlign = System.Drawing.ContentAlignment.TopCenter;
-            this.checkBoxBit7.UseVisualStyleBackColor = true;
-            // 
-            // textBoxHex
-            // 
-            this.textBoxHex.Location = new System.Drawing.Point(11, 12);
-            this.textBoxHex.Name = "textBoxHex";
-            this.textBoxHex.Size = new System.Drawing.Size(162, 20);
-            this.textBoxHex.TabIndex = 9;
             // 
             // labelBit7
             // 
@@ -206,11 +119,98 @@
             this.labelBit0.TabIndex = 17;
             this.labelBit0.Text = "0";
             // 
+            // textBoxHex
+            // 
+            this.textBoxHex.Location = new System.Drawing.Point(11, 12);
+            this.textBoxHex.Name = "textBoxHex";
+            this.textBoxHex.Size = new System.Drawing.Size(162, 20);
+            this.textBoxHex.TabIndex = 9;
+            // 
+            // checkBoxBit7
+            // 
+            this.checkBoxBit7.AutoSize = true;
+            this.checkBoxBit7.Location = new System.Drawing.Point(11, 51);
+            this.checkBoxBit7.Name = "checkBoxBit7";
+            this.checkBoxBit7.Size = new System.Drawing.Size(15, 14);
+            this.checkBoxBit7.TabIndex = 7;
+            this.checkBoxBit7.TextAlign = System.Drawing.ContentAlignment.TopCenter;
+            this.checkBoxBit7.UseVisualStyleBackColor = true;
+            // 
+            // checkBoxBit4
+            // 
+            this.checkBoxBit4.AutoSize = true;
+            this.checkBoxBit4.Location = new System.Drawing.Point(75, 51);
+            this.checkBoxBit4.Name = "checkBoxBit4";
+            this.checkBoxBit4.Size = new System.Drawing.Size(15, 14);
+            this.checkBoxBit4.TabIndex = 6;
+            this.checkBoxBit4.TextAlign = System.Drawing.ContentAlignment.TopCenter;
+            this.checkBoxBit4.UseVisualStyleBackColor = true;
+            // 
+            // checkBoxBit5
+            // 
+            this.checkBoxBit5.AutoSize = true;
+            this.checkBoxBit5.Location = new System.Drawing.Point(54, 51);
+            this.checkBoxBit5.Name = "checkBoxBit5";
+            this.checkBoxBit5.Size = new System.Drawing.Size(15, 14);
+            this.checkBoxBit5.TabIndex = 5;
+            this.checkBoxBit5.TextAlign = System.Drawing.ContentAlignment.TopCenter;
+            this.checkBoxBit5.UseVisualStyleBackColor = true;
+            // 
+            // checkBoxBit6
+            // 
+            this.checkBoxBit6.AutoSize = true;
+            this.checkBoxBit6.Location = new System.Drawing.Point(33, 51);
+            this.checkBoxBit6.Name = "checkBoxBit6";
+            this.checkBoxBit6.Size = new System.Drawing.Size(15, 14);
+            this.checkBoxBit6.TabIndex = 4;
+            this.checkBoxBit6.TextAlign = System.Drawing.ContentAlignment.TopCenter;
+            this.checkBoxBit6.UseVisualStyleBackColor = true;
+            // 
+            // checkBoxBit1
+            // 
+            this.checkBoxBit1.AutoSize = true;
+            this.checkBoxBit1.Location = new System.Drawing.Point(136, 51);
+            this.checkBoxBit1.Name = "checkBoxBit1";
+            this.checkBoxBit1.Size = new System.Drawing.Size(15, 14);
+            this.checkBoxBit1.TabIndex = 3;
+            this.checkBoxBit1.TextAlign = System.Drawing.ContentAlignment.TopCenter;
+            this.checkBoxBit1.UseVisualStyleBackColor = true;
+            // 
+            // checkBoxBit2
+            // 
+            this.checkBoxBit2.AutoSize = true;
+            this.checkBoxBit2.Location = new System.Drawing.Point(117, 51);
+            this.checkBoxBit2.Name = "checkBoxBit2";
+            this.checkBoxBit2.Size = new System.Drawing.Size(15, 14);
+            this.checkBoxBit2.TabIndex = 2;
+            this.checkBoxBit2.TextAlign = System.Drawing.ContentAlignment.TopCenter;
+            this.checkBoxBit2.UseVisualStyleBackColor = true;
+            // 
+            // checkBoxBit3
+            // 
+            this.checkBoxBit3.AutoSize = true;
+            this.checkBoxBit3.Location = new System.Drawing.Point(96, 51);
+            this.checkBoxBit3.Name = "checkBoxBit3";
+            this.checkBoxBit3.Size = new System.Drawing.Size(15, 14);
+            this.checkBoxBit3.TabIndex = 1;
+            this.checkBoxBit3.TextAlign = System.Drawing.ContentAlignment.TopCenter;
+            this.checkBoxBit3.UseVisualStyleBackColor = true;
+            // 
+            // checkBoxBit0
+            // 
+            this.checkBoxBit0.AutoSize = true;
+            this.checkBoxBit0.Location = new System.Drawing.Point(159, 51);
+            this.checkBoxBit0.Name = "checkBoxBit0";
+            this.checkBoxBit0.Size = new System.Drawing.Size(15, 14);
+            this.checkBoxBit0.TabIndex = 0;
+            this.checkBoxBit0.TextAlign = System.Drawing.ContentAlignment.TopCenter;
+            this.checkBoxBit0.UseVisualStyleBackColor = true;
+            // 
             // FormRegister
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(184, 75);
+            this.ClientSize = new System.Drawing.Size(184, 70);
             this.Controls.Add(this.labelBit0);
             this.Controls.Add(this.labelBit1);
             this.Controls.Add(this.labelBit2);

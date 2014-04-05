@@ -8,12 +8,12 @@ namespace PIC16F84_Emulator.PIC.Functions
     class IncFSZ : BaseDAddressFunction
     {
         public IncFSZ()
-            : base(0xF00, 1, false)
+            : base(0xF, 8, 1, false)
         {
 
         }
 
-        public override byte Calculate(PIC Pic, Data.SourceLine Line, byte Value)
+        public override byte Calculate(PIC Pic, Data.BytecodeLine Line, byte Value)
         {
             byte NewValue = (byte)(Value + 1);
             if (NewValue == 0)

@@ -8,12 +8,12 @@ namespace PIC16F84_Emulator.PIC.Functions
     class XOrWF : BaseDAddressFunction
     {
         public XOrWF()
-            : base(0x600, 1, true)
+            : base(0x6, 8, 1, true)
         {
 
         }
 
-        public override byte Calculate(PIC Pic, Data.SourceLine Line, byte Value)
+        public override byte Calculate(PIC Pic, Data.BytecodeLine Line, byte Value)
         {
             return (byte)(Pic.WRegister.Value ^ Value);
         }

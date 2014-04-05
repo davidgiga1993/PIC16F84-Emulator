@@ -6,22 +6,29 @@ using PIC16F84_Emulator.PIC.Data;
 
 namespace PIC16F84_Emulator.PIC.Functions
 {
-    abstract class BaseFunction
+    public abstract class BaseFunction
     {
         public int Bitmask;
+        public int BitmaskShift;
         public int Cycles;
 
-        public BaseFunction(int Bitmask, int Cycles)
+        public BaseFunction(int Bitmask, int BitmaskShift, int Cycles)
         {
             this.Bitmask = Bitmask;
+            this.BitmaskShift = BitmaskShift;
             this.Cycles = Cycles;
         }
 
-        public virtual bool Match(SourceLine Line)
+        public virtual bool Match(BytecodeLine Line)
         {
-            return ((Line.Command & Bitmask) != 0);
+            return Match(Line.Command);
         }
 
-        public abstract void Execute(PIC Pic, SourceLine Line);
+        public virtual bool Match(int Command)
+        {
+            return (Command >> BitmaskShift) == Bitmask;
+        }
+
+        public abstract void Execute(PIC Pic, BytecodeLine Line);
     }
 }
