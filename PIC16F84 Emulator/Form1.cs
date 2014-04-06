@@ -28,8 +28,12 @@ namespace PIC16F84_Emulator
             
         }
 
+        /// <summary>
+        /// Wird aufgerufen wenn eine neue Datei geladen und gesparst wurde
+        /// </summary>
         private void HasNewSource()
         {
+            // Alle alten Fenster schließen
             foreach (Form frm in this.MdiChildren)
             {
                 frm.Close();
@@ -138,6 +142,14 @@ namespace PIC16F84_Emulator
         private void trisBToolStripMenuItem_Click(object sender, EventArgs e)
         {
             ShowRegisterDetail(new Point(0, 0), 0x86, "Tris B");
+        }
+
+        private void pCRegisterToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            FormRegister Register = new FormRegister(Pic.RegisterMap.ProgrammCounterAdapter);
+            Register.MdiParent = this;
+            Register.Text = "Programmcounter";
+            Register.Show();
         }
 
         private void wRegisterToolStripMenuItem_Click(object sender, EventArgs e)

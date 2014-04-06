@@ -7,11 +7,18 @@ using PIC16F84_Emulator.PIC.Data;
 
 namespace PIC16F84_Emulator.UIElements
 {
+    /// <summary>
+    /// Entspricht einem TextBox UI Element mit der Funktionalität sich an eine Datenquelle zu binden
+    /// Zusätzlich werden alle Daten als Hexadezimal angezeigt und können auch geparst werden
+    /// </summary>
     class BindTextBoxHex : TextBox
     {
-        public delegate void OnBindDoubleclick(DataAdapter<byte> Adapter, string ID);
+        public delegate void OnBindDoubleclick(DataAdapter<int> Adapter, string ID);
         public event OnBindDoubleclick BindDoubleclick;
 
+        /// <summary>
+        /// Wenn true ändert sich die Hintergrundfarbe für ca 1 Sekunde wenn sich der Datenadapter aktualisiert hat
+        /// </summary>
         public bool EnableChangeColor
         {
             get
@@ -40,7 +47,7 @@ namespace PIC16F84_Emulator.UIElements
 
         private bool _EnableChangeColor;
 
-        private DataAdapter<byte> Adapter;
+        private DataAdapter<int> Adapter;
         private Timer ColorResetTimer;
 
         public BindTextBoxHex()
@@ -55,7 +62,7 @@ namespace PIC16F84_Emulator.UIElements
                 BindDoubleclick(Adapter, ID);
         }
 
-        public void Bind(DataAdapter<byte> Adapter)
+        public void Bind(DataAdapter<int> Adapter)
         {
             this.Adapter = Adapter;
             Adapter.DataChanged += Adapter_DataChanged;
@@ -69,7 +76,7 @@ namespace PIC16F84_Emulator.UIElements
                 try
                 {
                     int Temp = Convert.ToInt32(Text, 16);
-                    Adapter.Value = (byte)Temp;
+                    Adapter.Value = Temp;
                 }
                 catch
                 {
@@ -78,7 +85,7 @@ namespace PIC16F84_Emulator.UIElements
             }
         }
 
-        private void Adapter_DataChanged(byte Value, object Sender)
+        private void Adapter_DataChanged(int Value, object Sender)
         {
             Text = Value.ToString("X2");
             if(EnableChangeColor)

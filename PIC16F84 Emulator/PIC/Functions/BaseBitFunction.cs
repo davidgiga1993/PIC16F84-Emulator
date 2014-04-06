@@ -6,6 +6,9 @@ using PIC16F84_Emulator.PIC.Data;
 
 namespace PIC16F84_Emulator.PIC.Functions
 {
+    /// <summary>
+    /// Stellt eine abstrake Klasse für eine Funktion mit Bit Position und Adressparameter dar
+    /// </summary>
     abstract class BaseBitFunction : BaseFunction
     {
         public BaseBitFunction(int Bitmask, int BitmaskShift, int Cycles)

@@ -6,6 +6,9 @@ using PIC16F84_Emulator.PIC.Data;
 
 namespace PIC16F84_Emulator.PIC.Functions
 {
+    /// <summary>
+    /// Stellt eine abstrakte Klasse für eine Funktion mit einem Literal als Paramter da
+    /// </summary>
     abstract class BaseLiteralFunction : BaseFunction
     {
         public BaseLiteralFunction(int Bitmask, int BitmaskShift, int Cycles)

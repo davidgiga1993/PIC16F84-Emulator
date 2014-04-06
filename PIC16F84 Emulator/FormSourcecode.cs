@@ -49,11 +49,14 @@ namespace PIC16F84_Emulator
                 dataGridView1.Rows[RowIndex].Selected = true;
         }
 
-        private void ProgrammCounterAdapter_DataChanged(byte Value, object Sender)
+        private void ProgrammCounterAdapter_DataChanged(int Value, object Sender)
         {
-            RowIndex = Pic.ByteCode[Value].SourceCodeLineIndex;
-            dataGridView1.FirstDisplayedScrollingRowIndex = Math.Max(0, RowIndex - 5);
-            dataGridView1.Rows[RowIndex].Selected = true;
+            if (Value < Pic.ByteCode.Length)
+            {
+                RowIndex = Pic.ByteCode[Value].SourceCodeLineIndex;
+                dataGridView1.FirstDisplayedScrollingRowIndex = Math.Max(0, RowIndex - 5);
+                dataGridView1.Rows[RowIndex].Selected = true;
+            }
         }
     }
 }

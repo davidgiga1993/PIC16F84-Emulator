@@ -5,6 +5,9 @@ using System.Text;
 
 namespace PIC16F84_Emulator.PIC.Data
 {
+    /// <summary>
+    /// Enthält den Stack des Pics
+    /// </summary>
     public class StackData
     {
         /// <summary>

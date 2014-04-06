@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 using PIC16F84_Emulator.PIC.Data;
-
+using PIC16F84_Emulator.PIC.Data.Wrapper;
 namespace PIC16F84_Emulator
 {
     public partial class FormIORegister : Form
@@ -20,7 +20,7 @@ namespace PIC16F84_Emulator
         public FormIORegister(DataAdapter<byte> Adapter, DataAdapter<byte> TrisAdapter)
             : this()
         {
-            textBoxHex.Bind(Adapter);
+            textBoxHex.Bind(new ByteToIntDataAdapter(Adapter));
             checkBoxBit0.Bind(Adapter, 0);
             checkBoxBit1.Bind(Adapter, 1);
             checkBoxBit2.Bind(Adapter, 2);

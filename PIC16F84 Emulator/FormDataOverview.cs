@@ -8,7 +8,7 @@ using System.Text;
 using System.Windows.Forms;
 using PIC16F84_Emulator.PIC.Data;
 using PIC16F84_Emulator.UIElements;
-
+using PIC16F84_Emulator.PIC.Data.Wrapper;
 namespace PIC16F84_Emulator
 {
     public partial class FormDataOverview : Form
@@ -38,16 +38,20 @@ namespace PIC16F84_Emulator
                     T.BindDoubleclick += T_BindDoubleclick;                    
                     T.ID = (Y + X).ToString("X2");
                     T.Width = 20;
-                    T.Bind(Adapter);
+                    T.Bind(new ByteToIntDataAdapter(Adapter));
                     T.EnableChangeColor = true;
                     tableLayoutPanel1.Controls.Add(T, Y + 1, X + 1);
                 }
             }
         }
 
-        private void T_BindDoubleclick(DataAdapter<byte> Adapter, string ID)
+        private void T_BindDoubleclick(DataAdapter<int> Adapter, string ID)
         {
-            FormRegister Reg = new FormRegister(Adapter);
+            FormRegister Reg;
+            if (Adapter is ByteToIntDataAdapter)
+                Reg = new FormRegister(((ByteToIntDataAdapter)Adapter).SourceAdapter);
+            else
+                Reg = new FormRegister(Adapter);
             Reg.Text = "Register " + ID;
             Reg.MdiParent = MdiParent;
             Reg.Show();

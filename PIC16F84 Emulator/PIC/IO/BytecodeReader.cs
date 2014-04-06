@@ -8,7 +8,7 @@ using PIC16F84_Emulator.PIC.Data;
 namespace PIC16F84_Emulator.PIC.IO
 {
     /// <summary>
-    /// Wird für das Parsen von der LST Datei benutzt.    /// 
+    /// Wird für das Parsen von der LST Datei benutzt
     /// </summary>
     public class BytecodeReader
     {
@@ -21,14 +21,19 @@ namespace PIC16F84_Emulator.PIC.IO
         {
             StreamReader sr = new StreamReader(Filepath);
             string Data = sr.ReadToEnd();
-            Data = Data.Replace('\r',' ');
             sr.Close();
+
+            // \r entfernen um eine einheitliche Ausgangsbasis zu haben
+            Data = Data.Replace('\r',' ');
+            
+            // Zeilen aufteilen
             string[] Lines = Data.Split('\n');
             List<LSTLine> ParsedLines = new List<LSTLine>();
             for (int X = 0; X < Lines.Length; X++)
             {
                 try
                 {
+                    // Das Parsen einer Zeile wird in LSTLine erledigt
                     LSTLine Line = new LSTLine(Lines[X]);
                     ParsedLines.Add(Line);
                 }

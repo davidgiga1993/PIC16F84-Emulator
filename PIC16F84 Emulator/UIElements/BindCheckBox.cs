@@ -7,6 +7,9 @@ using PIC16F84_Emulator.PIC.Data;
 
 namespace PIC16F84_Emulator.UIElements
 {
+    /// <summary>
+    /// Entspricht dem CheckBox UI Element mit der Funktionalität sich an eine Datenquelle zu binden
+    /// </summary>
     class BindCheckBox : CheckBox
     {
         private DataAdapter<byte> Adapter;
@@ -21,6 +24,11 @@ namespace PIC16F84_Emulator.UIElements
                 Adapter.Value = Helper.UnsetBit(BitPosition, Adapter.Value);
         }
 
+        /// <summary>
+        /// Bindet die CheckBox an eine Datenquelle
+        /// </summary>
+        /// <param name="Adapter">Datenquelle</param>
+        /// <param name="BitPosition">Bit Position die verwendet werden soll</param>
         public void Bind(DataAdapter<byte> Adapter, int BitPosition)
         {
             this.Adapter = Adapter;

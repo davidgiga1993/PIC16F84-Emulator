@@ -6,9 +6,21 @@ using PIC16F84_Emulator.PIC.Data;
 
 namespace PIC16F84_Emulator.PIC.Functions
 {
+    /// <summary>
+    /// Stellt eine abstrakt Klasse für eine Funktion mit D Flag und Adressparameter dar
+    /// </summary>
     abstract class BaseDAddressFunction : BaseFunction
     {
         private bool AffectsZFlag;
+
+        /// <summary>
+        /// AffectsZeroFlag gibt an ob diese Funktion einfluss auf die Zero Flag hat.
+        /// Wenn ja wird diese Flag automatisch gesetzt wenn das Resultat der Berechnung 0 ist.
+        /// </summary>
+        /// <param name="Bitmask"></param>
+        /// <param name="BitmaskShift"></param>
+        /// <param name="Cycles"></param>
+        /// <param name="AffectsZFlag"></param>
         public BaseDAddressFunction(int Bitmask, int BitmaskShift, int Cycles, bool AffectsZFlag) : base(Bitmask, BitmaskShift, Cycles)
         {
             this.AffectsZFlag = AffectsZFlag;
@@ -25,7 +37,7 @@ namespace PIC16F84_Emulator.PIC.Functions
 
             if (AffectsZFlag)
             {
-                Pic.RegisterMap.SetZBit(Value == 0);
+                Pic.RegisterMap.ZeroBit = Value == 0;
             }
 
             if (D)

@@ -18,7 +18,7 @@ namespace PIC16F84_Emulator.PIC.Functions
             int Command = Line.Command;
 
             byte NewValue = 0;
-            Pic.RegisterMap.SetZBit(true);
+            Pic.RegisterMap.ZeroBit = true;
             Pic.WRegister.Value = NewValue;
 
             Pic.RegisterMap.ProgrammCounter++;

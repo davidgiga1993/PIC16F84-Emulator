@@ -17,7 +17,7 @@ namespace PIC16F84_Emulator.PIC.Functions
         {
             int NewValue = Pic.WRegister.Value & Literal;
 
-            Pic.RegisterMap.SetZBit(NewValue == 0);
+            Pic.RegisterMap.ZeroBit = NewValue == 0;
             Pic.WRegister.Value = (byte)NewValue;
             return true;
         }

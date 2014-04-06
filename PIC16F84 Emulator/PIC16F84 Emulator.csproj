@@ -74,6 +74,8 @@
     <Compile Include="PIC\Data\LSTLine.cs" />
     <Compile Include="PIC\Data\SourceCodeLine.cs" />
     <Compile Include="PIC\Data\StackData.cs" />
+    <Compile Include="PIC\Data\Wrapper\ByteToIntDataAdapter.cs" />
+    <Compile Include="PIC\Data\Wrapper\IntToByteDataAdapter.cs" />
     <Compile Include="PIC\Functions\AddLW.cs" />
     <Compile Include="PIC\Functions\AndLW.cs" />
     <Compile Include="PIC\Functions\BaseLiteralFunction.cs" />
@@ -113,7 +115,6 @@
     <Compile Include="PIC\Functions\XOrWF.cs" />
     <Compile Include="PIC\IO\BytecodeReader.cs" />
     <Compile Include="PIC\PIC.cs" />
-    <Compile Include="PIC\Register\Register.cs" />
     <Compile Include="PIC\Register\RegisterFileMap.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

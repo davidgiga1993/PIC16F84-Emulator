@@ -19,7 +19,7 @@ namespace PIC16F84_Emulator.PIC.Functions
             int RegAddress = Command & 0x7F;
 
             byte NewValue = 0;
-            Pic.RegisterMap.SetZBit(true);
+            Pic.RegisterMap.ZeroBit = true;
             Pic.RegisterMap.Set(NewValue, RegAddress);
 
             Pic.RegisterMap.ProgrammCounter++;

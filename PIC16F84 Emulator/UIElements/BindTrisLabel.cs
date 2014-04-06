@@ -7,6 +7,9 @@ using PIC16F84_Emulator.PIC.Data;
 
 namespace PIC16F84_Emulator.UIElements
 {
+    /// <summary>
+    /// Stellt ein Label für den Status eines Bits im Tris Register dar
+    /// </summary>
     class BindTrisLabel : Label
     {
         private DataAdapter<byte> Adapter;

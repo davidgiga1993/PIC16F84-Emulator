@@ -30,10 +30,12 @@ namespace PIC16F84_Emulator.PIC
 
         public PIC(string Sourcefile)
         {
+            //Einlesen der lst Datei
             CurrentFile = (new FileInfo(Sourcefile).Name);
             BytecodeReader Reader = new BytecodeReader();
             LSTLine[] LSTLines = Reader.ReadSourcecode(Sourcefile);
 
+            // Aufteilen des Codes in Quellcode (ASM) und Bytecode
             SourceCode = new SourceCodeLine[LSTLines.Length];
             List<BytecodeLine> ByteCode = new List<BytecodeLine>();
 
@@ -45,6 +47,7 @@ namespace PIC16F84_Emulator.PIC
             }
             this.ByteCode = ByteCode.ToArray();
 
+            // Alle verfügbaren Funktionen werden in einem Array angeordnet (schneller als in einer Liste)
             List<BaseFunction> Functions = new List<BaseFunction>();
             Functions.Add(new AddLW());
             Functions.Add(new AddWF());
@@ -86,6 +89,10 @@ namespace PIC16F84_Emulator.PIC
         {
         }
 
+        /// <summary>
+        /// Führt ein einzelnen Schritt aus.
+        /// Dieser kann je nach ausgeführter Funktion auch mehrere Zyklen dauern
+        /// </summary>
         public void Step()
         {
             int PC = RegisterMap.ProgrammCounter;
@@ -93,15 +100,11 @@ namespace PIC16F84_Emulator.PIC
                 ExecuteFunction(ByteCode[PC].Command, ByteCode[PC]);
         }
 
-
-        private void RunLoop()
-        {
-            while (Running)
-            {
-                Step();
-            }
-        }
-
+        /// <summary>
+        /// Führt die in Command kodierte Funktion aus
+        /// </summary>
+        /// <param name="Command">Befehl</param>
+        /// <param name="Line">Zu Befehl gehörige Zeile</param>
         private void ExecuteFunction(int Command, BytecodeLine Line)
         {
             for(int X= 0;X < Functions.Length; X++)
