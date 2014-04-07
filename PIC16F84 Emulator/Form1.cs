@@ -85,7 +85,7 @@ namespace PIC16F84_Emulator
             //if (OFD.ShowDialog() == System.Windows.Forms.DialogResult.OK)
             {
                 //TODO: Change path
-                Pic = new PIC.PIC(@"C:\Users\David\Documents\DH\Semester 3\Rechnerarchitektur\picsimu\BCDZahler.LST");
+                Pic = new PIC.PIC(@"C:\Daten\Studium\3. Semester - Theorie\Rechnerarchitektur\Simulator\picsimu\Windmuehle\windmuehle.LST");
                 HasNewSource();
             }
         }
