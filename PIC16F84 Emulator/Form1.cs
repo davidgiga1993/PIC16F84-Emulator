@@ -232,5 +232,17 @@ namespace PIC16F84_Emulator
         {
             Pic.Step();
         }
+
+        private void interruptToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (Pic == null)
+            {
+                Dialogs.ShowNoFileDialog();
+                return;
+            }
+            FormRegisterInterrupt I = new FormRegisterInterrupt(Pic.RegisterMap.GetAdapter(0xB));
+            I.MdiParent = this;
+            I.Show();
+        }
     }
 }

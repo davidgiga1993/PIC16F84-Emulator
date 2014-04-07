@@ -46,8 +46,9 @@
             this.trisAToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.trisBToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.wRegisterToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.pCRegisterToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
+            this.interruptToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -134,7 +135,8 @@
             this.trisAToolStripMenuItem,
             this.trisBToolStripMenuItem,
             this.wRegisterToolStripMenuItem,
-            this.pCRegisterToolStripMenuItem});
+            this.pCRegisterToolStripMenuItem,
+            this.interruptToolStripMenuItem});
             this.viewToolStripMenuItem.Name = "viewToolStripMenuItem";
             this.viewToolStripMenuItem.Size = new System.Drawing.Size(44, 20);
             this.viewToolStripMenuItem.Text = "View";
@@ -150,7 +152,7 @@
             // 
             this.registerToolStripMenuItem.Name = "registerToolStripMenuItem";
             this.registerToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
-            this.registerToolStripMenuItem.Text = "Register";
+            this.registerToolStripMenuItem.Text = "All register";
             this.registerToolStripMenuItem.Click += new System.EventHandler(this.registerToolStripMenuItem_Click);
             // 
             // portAToolStripMenuItem
@@ -185,8 +187,15 @@
             // 
             this.wRegisterToolStripMenuItem.Name = "wRegisterToolStripMenuItem";
             this.wRegisterToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
-            this.wRegisterToolStripMenuItem.Text = "W Register";
+            this.wRegisterToolStripMenuItem.Text = "W register";
             this.wRegisterToolStripMenuItem.Click += new System.EventHandler(this.wRegisterToolStripMenuItem_Click);
+            // 
+            // pCRegisterToolStripMenuItem
+            // 
+            this.pCRegisterToolStripMenuItem.Name = "pCRegisterToolStripMenuItem";
+            this.pCRegisterToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.pCRegisterToolStripMenuItem.Text = "PC register";
+            this.pCRegisterToolStripMenuItem.Click += new System.EventHandler(this.pCRegisterToolStripMenuItem_Click);
             // 
             // toolStripMenuItem1
             // 
@@ -195,12 +204,12 @@
             this.toolStripMenuItem1.Text = "?";
             this.toolStripMenuItem1.Click += new System.EventHandler(this.toolStripMenuItem1_Click);
             // 
-            // pCRegisterToolStripMenuItem
+            // interruptToolStripMenuItem
             // 
-            this.pCRegisterToolStripMenuItem.Name = "pCRegisterToolStripMenuItem";
-            this.pCRegisterToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
-            this.pCRegisterToolStripMenuItem.Text = "PC Register";
-            this.pCRegisterToolStripMenuItem.Click += new System.EventHandler(this.pCRegisterToolStripMenuItem_Click);
+            this.interruptToolStripMenuItem.Name = "interruptToolStripMenuItem";
+            this.interruptToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.interruptToolStripMenuItem.Text = "Intcon register";
+            this.interruptToolStripMenuItem.Click += new System.EventHandler(this.interruptToolStripMenuItem_Click);
             // 
             // Form1
             // 
@@ -244,6 +253,7 @@
         private System.Windows.Forms.ToolStripMenuItem wRegisterToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem runF5ToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem pCRegisterToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem interruptToolStripMenuItem;
     }
 }
 

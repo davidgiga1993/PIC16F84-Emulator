@@ -27,8 +27,11 @@ namespace PIC16F84_Emulator
             : this()
         {
             this.Pic = Pic;
+            // Event für FSR registrieren
             Pic.RegisterMap.FSRChanged += RegisterMap_FSRChanged;
+
             AddHeader();
+            // UI Erstellen
             for (int X = 0; X < Pic.RegisterMap.Length; X += 8)
             {
                 Label L = new Label();
