@@ -47,7 +47,8 @@ namespace PIC16F84_Emulator.PIC.Data
         public int Pop()
         {
             int Value = Entrys[Pos].Value;
-            if(Pos > 0)
+            Entrys[Pos].Value = 0;
+            if(Pos >= 0)
                 Pos--;
             return Value;
         }

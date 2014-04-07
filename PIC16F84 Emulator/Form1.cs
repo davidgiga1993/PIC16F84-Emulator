@@ -8,6 +8,8 @@ using System.Text;
 using System.Windows.Forms;
 using PIC16F84_Emulator.PIC.Data;
 using PIC16F84_Emulator.UIElements;
+
+
 namespace PIC16F84_Emulator
 {
     public partial class Form1 : Form
@@ -15,12 +17,12 @@ namespace PIC16F84_Emulator
         protected PIC.PIC Pic;
 
         protected Timer RunTimer = new Timer();
-
+        
         public Form1()
         {
             InitializeComponent();
             RunTimer.Tick += RunTimer_Tick;
-            RunTimer.Interval = 10;
+            RunTimer.Interval = 1;
         }
 
         private void Form1_Load(object sender, EventArgs e)
@@ -73,6 +75,7 @@ namespace PIC16F84_Emulator
 
         private void toolStripMenuItem1_Click(object sender, EventArgs e)
         {
+            
         }
 
         private void toolStripMenuItem2_Click(object sender, EventArgs e)
@@ -85,7 +88,7 @@ namespace PIC16F84_Emulator
             //if (OFD.ShowDialog() == System.Windows.Forms.DialogResult.OK)
             {
                 //TODO: Change path
-                Pic = new PIC.PIC(@"C:\Daten\Studium\3. Semester - Theorie\Rechnerarchitektur\Simulator\picsimu\Windmuehle\windmuehle.LST");
+                Pic = new PIC.PIC(@"C:\Users\David\Documents\DH\Semester 3\Rechnerarchitektur\picsimu\BCDZahler.lst");
                 HasNewSource();
             }
         }
@@ -243,6 +246,18 @@ namespace PIC16F84_Emulator
             FormRegisterInterrupt I = new FormRegisterInterrupt(Pic.RegisterMap.GetAdapter(0xB));
             I.MdiParent = this;
             I.Show();
+        }
+
+        private void stackToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (Pic == null)
+            {
+                Dialogs.ShowNoFileDialog();
+                return;
+            }
+            FormStack S = new FormStack(Pic);
+            S.MdiParent = this;
+            S.Show();
         }
     }
 }

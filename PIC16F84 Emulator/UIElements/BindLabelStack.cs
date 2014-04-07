@@ -9,18 +9,20 @@ namespace PIC16F84_Emulator.UIElements
 {
     class BindLabelStack : Label
     {
-        private DataAdapter<byte> Adapter;
+        private DataAdapter<int> Adapter;
+        private int StackIndex;
 
-        public void Bind(DataAdapter<byte> StackAdapter)
+        public void Bind(DataAdapter<int> Adapter, int StackIndex)
         {
-            this.Adapter = StackAdapter;
+            this.StackIndex = StackIndex;
+            this.Adapter = Adapter;
             Adapter.DataChanged += Adapter_DataChanged;
             Adapter_DataChanged(Adapter.Value, null);
         }
 
-        private void Adapter_DataChanged(byte Value, object Sender)
+        private void Adapter_DataChanged(int Value, object Sender)
         {
-            Text = Value.ToString();
+            Text = "Stack " + StackIndex + ": " + Value.ToString();
         }
     }
 }
