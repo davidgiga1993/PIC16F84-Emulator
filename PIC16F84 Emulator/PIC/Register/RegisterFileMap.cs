@@ -9,8 +9,10 @@ namespace PIC16F84_Emulator.PIC.Register
 {
     public class RegisterFileMap
     {
+        public delegate void OnFSRChanged();
+        public event OnFSRChanged FSRChanged;
+
         private static readonly int REG_STATUS_ADDRESS = 0x3;
-        private static readonly int REG_PROGRAMCOUNTER_ADDRESS = 0x2;
         private static readonly int REG_C_BIT = 0;
         private static readonly int REG_DC_BIT = 1;
         private static readonly int REG_Z_BIT = 2;
@@ -45,6 +47,9 @@ namespace PIC16F84_Emulator.PIC.Register
                 Mapping[X] = X;
                 switch (X)
                 {
+                    case 0x80:
+                        Mapping[X] = 0x0;
+                        break;
                     case 0x83:
                         Mapping[X] = 0x03;
                         break;
@@ -90,6 +95,8 @@ namespace PIC16F84_Emulator.PIC.Register
             Set(0xFF, 0x81);
             Set(0xFF, 0x85);
             Set(0xFF, 0x86);
+
+            Data[0x4].DataChanged += RegisterFileMap_DataChanged;
         }
 
 
@@ -197,6 +204,21 @@ namespace PIC16F84_Emulator.PIC.Register
         }
 
 
+
+        /// <summary>
+        /// FSR Register hat sich geändert
+        /// Mapping anpassen
+        /// </summary>
+        /// <param name="Value"></param>
+        /// <param name="Sender"></param>
+        private void RegisterFileMap_DataChanged(byte Value, object Sender)
+        {
+            Mapping[0x0] = Value;
+            Mapping[0x80] = Value;
+            if (FSRChanged != null)
+                FSRChanged();
+        }
+
         /// <summary>
         /// Setzt ein Register an der gegebenen Adresse
         /// </summary>
@@ -207,7 +229,15 @@ namespace PIC16F84_Emulator.PIC.Register
             if (IsBank1())
                 Position += 0x80;
 
-            Position = Mapping[Position];           
+            Position = Mapping[Position];
+            switch(Position)
+            {
+                case 0x4:
+                    RegisterFileMap_DataChanged(Data, null);
+                    break;
+                default:                    
+                    break;
+            }
             this.Data[Position].Value = Data;
         }
 

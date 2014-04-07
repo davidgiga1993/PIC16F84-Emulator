@@ -13,6 +13,7 @@ namespace PIC16F84_Emulator.PIC.Data.Wrapper
         {
             this.Adapter = Adapter;
             Adapter.DataChanged += Adapter_DataChanged;
+            Adapter_DataChanged(Adapter.Value, null);
         }
 
         public DataAdapter<byte> SourceAdapter
