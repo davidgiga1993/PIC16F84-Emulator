@@ -46,7 +46,7 @@ namespace PIC16F84_Emulator
             Source.StartPosition = FormStartPosition.Manual;
             Source.Show();
 
-            FormDataOverview Data = new FormDataOverview(Pic);
+            FormRegisterOverview Data = new FormRegisterOverview(Pic);
             Data.MdiParent = this;
             Data.StartPosition = FormStartPosition.Manual;
             Data.Location = new Point(Source.Location.X + Source.Width + 10, Source.Location.Y);
@@ -119,7 +119,7 @@ namespace PIC16F84_Emulator
                 Dialogs.ShowNoFileDialog();
                 return;
             }
-            FormDataOverview Data = new FormDataOverview(Pic);
+            FormRegisterOverview Data = new FormRegisterOverview(Pic);
             Data.MdiParent = this;
             Data.Show();
         }

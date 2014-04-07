@@ -7,20 +7,21 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 using PIC16F84_Emulator.PIC.Data;
-using PIC16F84_Emulator.UIElements;
 using PIC16F84_Emulator.PIC.Data.Wrapper;
+using PIC16F84_Emulator.UIElements;
+
 namespace PIC16F84_Emulator
 {
-    public partial class FormDataOverview : Form
+    public partial class FormRegisterOverview : Form
     {
         private PIC.PIC Pic;
 
-        public FormDataOverview()
+        public FormRegisterOverview()
         {
             InitializeComponent();
         }
 
-        public FormDataOverview(PIC.PIC Pic)
+        public FormRegisterOverview(PIC.PIC Pic)
             : this()
         {
             this.Pic = Pic;
@@ -29,18 +30,18 @@ namespace PIC16F84_Emulator
             {
                 Label L = new Label();
                 L.Text = X.ToString("X2");
-                L.Width = 25;
-                tableLayoutPanel1.Controls.Add(L, 0, X + 1);
+                L.SetBounds(0, 23 + X * 3, 20, 13);
+                Controls.Add(L);
                 for (int Y = 0; Y < 8; Y++)
                 {
                     DataAdapter<byte> Adapter = Pic.RegisterMap.GetAdapter(X + Y);
                     BindTextBoxHex T = new BindTextBoxHex();
                     T.BindDoubleclick += T_BindDoubleclick;                    
                     T.ID = (Y + X).ToString("X2");
-                    T.Width = 20;
+                    T.SetBounds(35 + Y * 34, X * 3 + 20, 20, 15);
                     T.Bind(new ByteToIntDataAdapter(Adapter));
                     T.EnableChangeColor = true;
-                    tableLayoutPanel1.Controls.Add(T, Y + 1, X + 1);
+                    Controls.Add(T);
                 }
             }
         }
@@ -63,7 +64,8 @@ namespace PIC16F84_Emulator
             {
                 Label L = new Label();
                 L.Text = X.ToString("X2");
-                tableLayoutPanel1.Controls.Add(L, X + 1, 0);
+                L.SetBounds(35 + X * 34, 0, 20, 15);
+                Controls.Add(L);
             }
         }
     }

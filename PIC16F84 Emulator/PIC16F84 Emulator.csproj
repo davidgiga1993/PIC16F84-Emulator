@@ -50,17 +50,17 @@
     <Compile Include="Form1.Designer.cs">
       <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
-    <Compile Include="FormDataOverview.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="FormDataOverview.Designer.cs">
-      <DependentUpon>FormDataOverview.cs</DependentUpon>
-    </Compile>
     <Compile Include="FormIORegister.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="FormIORegister.Designer.cs">
       <DependentUpon>FormIORegister.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FormRegisterOverview.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormRegisterOverview.Designer.cs">
+      <DependentUpon>FormRegisterOverview.cs</DependentUpon>
     </Compile>
     <Compile Include="FormSourcecode.cs">
       <SubType>Form</SubType>
@@ -137,11 +137,11 @@
     <EmbeddedResource Include="Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="FormDataOverview.resx">
-      <DependentUpon>FormDataOverview.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="FormIORegister.resx">
       <DependentUpon>FormIORegister.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormRegisterOverview.resx">
+      <DependentUpon>FormRegisterOverview.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="FormSourcecode.resx">
       <DependentUpon>FormSourcecode.cs</DependentUpon>
