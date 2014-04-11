@@ -12,7 +12,7 @@ namespace PIC16F84_Emulator.PIC
 {
     public class PIC
     {
-        public RegisterFileMap RegisterMap = new RegisterFileMap();
+        public RegisterFileMap RegisterMap;
         public DataAdapter<byte> WRegister = new DataAdapter<byte>();
         public StackData Stack = new StackData();
 
@@ -26,10 +26,13 @@ namespace PIC16F84_Emulator.PIC
         public bool Running = false;
         public bool SingleStepMode = true;
         public DataAdapter<int> Runtime = new DataAdapter<int>();
-                
+
+        public bool RunInterrupt = false;
 
         public PIC(string Sourcefile)
         {
+            RegisterMap = new RegisterFileMap(this);
+
             //Einlesen der lst Datei
             CurrentFile = (new FileInfo(Sourcefile).Name);
             BytecodeReader Reader = new BytecodeReader();
@@ -85,8 +88,28 @@ namespace PIC16F84_Emulator.PIC
             this.Functions = Functions.ToArray();
         }
 
-        public void Start()
+        /// <summary>
+        /// Überprüft ob der Interrupt ausgeführt werden soll
+        /// </summary>
+        private void CheckInterrupt()
         {
+            if(RegisterMap.GlobalInterruptEnable) // Interrupt angeschaltet
+            {
+                if(RegisterMap.RB0ExternalInterrupt && RegisterMap.RB0ExternalInterruptEnable) // RB0 interrupt gesetzt und aktiv
+                {
+                    DoInterrupt();
+                }
+            }
+            RunInterrupt = false;
+        }
+
+        /// <summary>
+        /// Ruft den Interrupt auf
+        /// </summary>
+        private void DoInterrupt()
+        {
+            Stack.Push(RegisterMap.ProgrammCounter);
+            RegisterMap.ProgrammCounter = 0x4;
         }
 
         /// <summary>
@@ -98,6 +121,9 @@ namespace PIC16F84_Emulator.PIC
             int PC = RegisterMap.ProgrammCounter;
             if(PC < ByteCode.Length)
                 ExecuteFunction(ByteCode[PC].Command, ByteCode[PC]);
+
+            if (RunInterrupt) // Interrupt soll überprüft werden
+                CheckInterrupt();
         }
 
         /// <summary>

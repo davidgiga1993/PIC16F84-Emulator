@@ -12,6 +12,8 @@ namespace PIC16F84_Emulator.PIC.Register
         public delegate void OnFSRChanged();
         public event OnFSRChanged FSRChanged;
 
+        private PIC Pic;
+
         private static readonly int REG_STATUS_ADDRESS = 0x3;
         private static readonly int REG_INTCON_ADDRESS = 0xB;
 
@@ -44,8 +46,9 @@ namespace PIC16F84_Emulator.PIC.Register
         /// Initialisiert die Daten im Register
         /// Die Startwerte wurden dem Datenblatt entnommen        
         /// </summary>
-        public RegisterFileMap()
-        {   
+        public RegisterFileMap(PIC Pic)
+        {
+            this.Pic = Pic;
             Mapping = new int[256];
             Data = new DataAdapter<byte>[256];
             PC_I = new DataAdapter<int>();
@@ -239,9 +242,13 @@ namespace PIC16F84_Emulator.PIC.Register
             {
                 byte Register = Get(REG_INTCON_ADDRESS);
                 if (value)
+                {
                     Register = Helper.SetBit(REG_T0IE_BIT, Register);
+                }
                 else
+                {
                     Register = Helper.UnsetBit(REG_T0IE_BIT, Register);
+                }
                 Set(Register, REG_INTCON_ADDRESS, false);
             }
         }
@@ -276,11 +283,17 @@ namespace PIC16F84_Emulator.PIC.Register
             {
                 byte Register = Get(REG_INTCON_ADDRESS);
                 if (value)
+                {
+                    if (!Helper.CheckBit(REG_INTF_BIT, Register)) // Auf positive Flanke überprüfen
+                        Pic.RunInterrupt = true; // Interrupt in nächstem Zyklus überprüfen
                     Register = Helper.SetBit(REG_INTF_BIT, Register);
+                }
                 else
+                { 
                     Register = Helper.UnsetBit(REG_INTF_BIT, Register);
+                }
                 Set(Register, REG_INTCON_ADDRESS, false);
-            }            
+            }
         }
 
         /// <summary>

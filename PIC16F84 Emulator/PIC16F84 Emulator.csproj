@@ -116,6 +116,7 @@
     <Compile Include="PIC\Functions\MovLW.cs" />
     <Compile Include="PIC\Functions\MovWF.cs" />
     <Compile Include="PIC\Functions\NOP.cs" />
+    <Compile Include="PIC\Functions\RetFIE.cs" />
     <Compile Include="PIC\Functions\RetLW.cs" />
     <Compile Include="PIC\Functions\Return.cs" />
     <Compile Include="PIC\Functions\RlF.cs" />
