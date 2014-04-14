@@ -29,9 +29,9 @@ namespace PIC16F84_Emulator.PIC.Functions
         /// </summary>
         /// <param name="Line"></param>
         /// <returns></returns>
-        public override bool Match(Data.BytecodeLine Line)
+        public override bool Match(int Command)
         {
-            int Command = Line.Command | (1 << 8);
+            Command = Command | (1 << 8);
             return base.Match(Command);
         }
     }

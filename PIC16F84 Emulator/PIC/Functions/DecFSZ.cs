@@ -17,9 +17,14 @@ namespace PIC16F84_Emulator.PIC.Functions
         {
             byte NewValue = (byte)(Value - 1);
             if (NewValue == 0)
+            {
                 Cycles = 2;
+                Pic.RegisterMap.ProgrammCounter++;
+            }
             else
+            {
                 Cycles = 1;
+            }
             return NewValue;
         }
     }

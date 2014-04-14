@@ -140,7 +140,7 @@ namespace PIC16F84_Emulator.PIC.Register
                     Register = Helper.SetBit(REG_Z_BIT, Register);
                 else
                     Register = Helper.UnsetBit(REG_Z_BIT, Register);
-                Set(Register, REG_STATUS_ADDRESS, false);
+                Set(Register, REG_STATUS_ADDRESS);
             }
         }
 
@@ -162,7 +162,7 @@ namespace PIC16F84_Emulator.PIC.Register
                     Register = Helper.SetBit(REG_C_BIT, Register);
                 else
                     Register = Helper.UnsetBit(REG_C_BIT, Register);
-                Set(Register, REG_STATUS_ADDRESS, false);
+                Set(Register, REG_STATUS_ADDRESS);
             }
         }
 
@@ -211,7 +211,7 @@ namespace PIC16F84_Emulator.PIC.Register
                     Register = Helper.SetBit(REG_DC_BIT, Register);
                 else
                     Register = Helper.UnsetBit(REG_DC_BIT, Register);
-                Set(Register, REG_STATUS_ADDRESS, false);
+                Set(Register, REG_STATUS_ADDRESS);
             }
         }
 
@@ -228,7 +228,7 @@ namespace PIC16F84_Emulator.PIC.Register
                     Register = Helper.SetBit(REG_GIE_BIT, Register);
                 else
                     Register = Helper.UnsetBit(REG_GIE_BIT, Register);
-                Set(Register, REG_INTCON_ADDRESS, false);
+                Set(Register, REG_INTCON_ADDRESS);
             }
         }
 
@@ -249,7 +249,7 @@ namespace PIC16F84_Emulator.PIC.Register
                 {
                     Register = Helper.UnsetBit(REG_T0IE_BIT, Register);
                 }
-                Set(Register, REG_INTCON_ADDRESS, false);
+                Set(Register, REG_INTCON_ADDRESS);
             }
         }
 
@@ -266,7 +266,7 @@ namespace PIC16F84_Emulator.PIC.Register
                     Register = Helper.SetBit(REG_INTE_BIT, Register);
                 else
                     Register = Helper.UnsetBit(REG_INTE_BIT, Register);
-                Set(Register, REG_INTCON_ADDRESS, false);
+                Set(Register, REG_INTCON_ADDRESS);
             }
         }
 
@@ -292,7 +292,7 @@ namespace PIC16F84_Emulator.PIC.Register
                 { 
                     Register = Helper.UnsetBit(REG_INTF_BIT, Register);
                 }
-                Set(Register, REG_INTCON_ADDRESS, false);
+                Set(Register, REG_INTCON_ADDRESS);
             }
         }
 
@@ -331,18 +331,7 @@ namespace PIC16F84_Emulator.PIC.Register
         /// <param name="Position">Register Adresse</param>
         public void Set(byte Data, int Position)
         {
-            Set(Data, Position, false);
-        }
-
-         /// <summary>
-        /// Setzt ein Register an der gegebenen Adresse
-        /// </summary>
-        /// <param name="Data">Daten fürs Register</param>
-        /// <param name="Position">Register Adresse</param>
-        /// <param name="UseBankSwitch">True wenn die Bank Flag beachtet werden soll</param>
-        public void Set(byte Data, int Position, bool UseBankSwitch)
-        {
-            if (UseBankSwitch && IsBank1())
+            if (IsBank1())
                 Position += 0x80;
 
             Position = Mapping[Position];

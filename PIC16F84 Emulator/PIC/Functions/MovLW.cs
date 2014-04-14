@@ -8,7 +8,7 @@ namespace PIC16F84_Emulator.PIC.Functions
     class MovLW : BaseLiteralFunction
     {
         public MovLW()
-            : base(0x30, 8, 1)
+            : base(0x33, 8, 1)
         {
 
         }
@@ -27,9 +27,9 @@ namespace PIC16F84_Emulator.PIC.Functions
         /// </summary>
         /// <param name="Line"></param>
         /// <returns></returns>
-        public override bool Match(Data.BytecodeLine Line)
+        public override bool Match(int Command)
         {
-            int Command = Line.Command | (1 << 8) | (1 << 9);
+            Command = Command | (1 << 8) | (1 << 9);
             return base.Match(Command);
         }
     }

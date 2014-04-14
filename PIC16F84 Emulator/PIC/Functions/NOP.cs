@@ -14,9 +14,9 @@ namespace PIC16F84_Emulator.PIC.Functions
 
         }
 
-        public override bool Match(BytecodeLine Line)
+        public override bool Match(int Command)
         {
-            return (Line.Command == 0 || Line.Command == 0x20 || Line.Command == 0x40 || Line.Command == 0x60);            
+            return (Command == 0 || Command == 0x20 || Command == 0x40 || Command == 0x60);            
         }
 
         public override void Execute(PIC Pic, BytecodeLine Line)

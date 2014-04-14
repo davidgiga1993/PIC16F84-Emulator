@@ -16,7 +16,21 @@ namespace PIC16F84_Emulator
         public FormSourcecode()
         {
             InitializeComponent();
+            dataGridView1.CellContentDoubleClick += roomDataGridView_CellContentDoubleClick;
         }
+         private void roomDataGridView_CellContentDoubleClick(object sender, DataGridViewCellEventArgs e)
+         {
+             if (Pic.Breakpoints.Contains(e.RowIndex))
+             {
+                 dataGridView1.Rows[e.RowIndex].DefaultCellStyle.BackColor = Color.FromArgb(255, 224, 224, 224);                 
+                 Pic.Breakpoints.Remove(e.RowIndex);
+             }
+             else
+             {
+                 dataGridView1.Rows[e.RowIndex].DefaultCellStyle.BackColor = Color.Red;
+                 Pic.Breakpoints.Add(e.RowIndex);
+             }
+         }
 
         public FormSourcecode(PIC.PIC Pic) : this()
         {

@@ -48,8 +48,8 @@
             this.wRegisterToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.pCRegisterToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.interruptToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.stackToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -93,14 +93,14 @@
             // toolStripMenuItem2
             // 
             this.toolStripMenuItem2.Name = "toolStripMenuItem2";
-            this.toolStripMenuItem2.Size = new System.Drawing.Size(103, 22);
-            this.toolStripMenuItem2.Text = "Open";
+            this.toolStripMenuItem2.Size = new System.Drawing.Size(152, 22);
+            this.toolStripMenuItem2.Text = "Open (Strg+O)";
             this.toolStripMenuItem2.Click += new System.EventHandler(this.toolStripMenuItem2_Click);
             // 
             // schließenToolStripMenuItem1
             // 
             this.schließenToolStripMenuItem1.Name = "schließenToolStripMenuItem1";
-            this.schließenToolStripMenuItem1.Size = new System.Drawing.Size(103, 22);
+            this.schließenToolStripMenuItem1.Size = new System.Drawing.Size(152, 22);
             this.schließenToolStripMenuItem1.Text = "Close";
             // 
             // runToolStripMenuItem
@@ -146,65 +146,72 @@
             // sourceToolStripMenuItem
             // 
             this.sourceToolStripMenuItem.Name = "sourceToolStripMenuItem";
-            this.sourceToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.sourceToolStripMenuItem.Size = new System.Drawing.Size(150, 22);
             this.sourceToolStripMenuItem.Text = "Source";
             this.sourceToolStripMenuItem.Click += new System.EventHandler(this.sourceToolStripMenuItem_Click);
             // 
             // registerToolStripMenuItem
             // 
             this.registerToolStripMenuItem.Name = "registerToolStripMenuItem";
-            this.registerToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.registerToolStripMenuItem.Size = new System.Drawing.Size(150, 22);
             this.registerToolStripMenuItem.Text = "All register";
             this.registerToolStripMenuItem.Click += new System.EventHandler(this.registerToolStripMenuItem_Click);
             // 
             // portAToolStripMenuItem
             // 
             this.portAToolStripMenuItem.Name = "portAToolStripMenuItem";
-            this.portAToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.portAToolStripMenuItem.Size = new System.Drawing.Size(150, 22);
             this.portAToolStripMenuItem.Text = "Port A";
             this.portAToolStripMenuItem.Click += new System.EventHandler(this.portAToolStripMenuItem_Click);
             // 
             // portBToolStripMenuItem
             // 
             this.portBToolStripMenuItem.Name = "portBToolStripMenuItem";
-            this.portBToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.portBToolStripMenuItem.Size = new System.Drawing.Size(150, 22);
             this.portBToolStripMenuItem.Text = "Port B";
             this.portBToolStripMenuItem.Click += new System.EventHandler(this.portBToolStripMenuItem_Click);
             // 
             // trisAToolStripMenuItem
             // 
             this.trisAToolStripMenuItem.Name = "trisAToolStripMenuItem";
-            this.trisAToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.trisAToolStripMenuItem.Size = new System.Drawing.Size(150, 22);
             this.trisAToolStripMenuItem.Text = "Tris A";
             this.trisAToolStripMenuItem.Click += new System.EventHandler(this.trisAToolStripMenuItem_Click);
             // 
             // trisBToolStripMenuItem
             // 
             this.trisBToolStripMenuItem.Name = "trisBToolStripMenuItem";
-            this.trisBToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.trisBToolStripMenuItem.Size = new System.Drawing.Size(150, 22);
             this.trisBToolStripMenuItem.Text = "Tris B";
             this.trisBToolStripMenuItem.Click += new System.EventHandler(this.trisBToolStripMenuItem_Click);
             // 
             // wRegisterToolStripMenuItem
             // 
             this.wRegisterToolStripMenuItem.Name = "wRegisterToolStripMenuItem";
-            this.wRegisterToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.wRegisterToolStripMenuItem.Size = new System.Drawing.Size(150, 22);
             this.wRegisterToolStripMenuItem.Text = "W register";
             this.wRegisterToolStripMenuItem.Click += new System.EventHandler(this.wRegisterToolStripMenuItem_Click);
             // 
             // pCRegisterToolStripMenuItem
             // 
             this.pCRegisterToolStripMenuItem.Name = "pCRegisterToolStripMenuItem";
-            this.pCRegisterToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.pCRegisterToolStripMenuItem.Size = new System.Drawing.Size(150, 22);
             this.pCRegisterToolStripMenuItem.Text = "PC register";
             this.pCRegisterToolStripMenuItem.Click += new System.EventHandler(this.pCRegisterToolStripMenuItem_Click);
             // 
             // interruptToolStripMenuItem
             // 
             this.interruptToolStripMenuItem.Name = "interruptToolStripMenuItem";
-            this.interruptToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.interruptToolStripMenuItem.Size = new System.Drawing.Size(150, 22);
             this.interruptToolStripMenuItem.Text = "Intcon register";
             this.interruptToolStripMenuItem.Click += new System.EventHandler(this.interruptToolStripMenuItem_Click);
+            // 
+            // stackToolStripMenuItem
+            // 
+            this.stackToolStripMenuItem.Name = "stackToolStripMenuItem";
+            this.stackToolStripMenuItem.Size = new System.Drawing.Size(150, 22);
+            this.stackToolStripMenuItem.Text = "Stack";
+            this.stackToolStripMenuItem.Click += new System.EventHandler(this.stackToolStripMenuItem_Click);
             // 
             // toolStripMenuItem1
             // 
@@ -212,13 +219,6 @@
             this.toolStripMenuItem1.Size = new System.Drawing.Size(24, 20);
             this.toolStripMenuItem1.Text = "?";
             this.toolStripMenuItem1.Click += new System.EventHandler(this.toolStripMenuItem1_Click);
-            // 
-            // stackToolStripMenuItem
-            // 
-            this.stackToolStripMenuItem.Name = "stackToolStripMenuItem";
-            this.stackToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
-            this.stackToolStripMenuItem.Text = "Stack";
-            this.stackToolStripMenuItem.Click += new System.EventHandler(this.stackToolStripMenuItem_Click);
             // 
             // Form1
             // 

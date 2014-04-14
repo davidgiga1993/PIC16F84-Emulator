@@ -15,14 +15,10 @@ namespace PIC16F84_Emulator
     public partial class Form1 : Form
     {
         protected PIC.PIC Pic;
-
-        protected Timer RunTimer = new Timer();
         
         public Form1()
         {
             InitializeComponent();
-            RunTimer.Tick += RunTimer_Tick;
-            RunTimer.Interval = 1;
         }
 
         private void Form1_Load(object sender, EventArgs e)
@@ -71,6 +67,10 @@ namespace PIC16F84_Emulator
             {
                 Run();
             }
+            else if(e.KeyCode == Keys.O && e.Modifiers == Keys.Control)
+            {
+                toolStripMenuItem2_Click(null, null);
+            }
         }
 
         private void toolStripMenuItem1_Click(object sender, EventArgs e)
@@ -85,10 +85,11 @@ namespace PIC16F84_Emulator
             OFD.CheckFileExists = true;
             OFD.Multiselect = false;
 
-            //if (OFD.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+            if (OFD.ShowDialog() == System.Windows.Forms.DialogResult.OK)
             {
                 //TODO: Change path
-                Pic = new PIC.PIC(@"C:\Users\David\Documents\DH\Semester 3\Rechnerarchitektur\picsimu\BCDZahler.lst");
+                Pic = new PIC.PIC(OFD.FileName);
+                //Pic = new PIC.PIC(@"C:\Users\David\Documents\DH\Semester 3\Rechnerarchitektur\picsimu\BCDZahler.lst");
                 HasNewSource();
             }
         }
@@ -214,7 +215,7 @@ namespace PIC16F84_Emulator
                 Dialogs.ShowNoFileDialog();
                 return;
             }
-            RunTimer.Stop();
+            Pic.RunTimer.Stop();
             Pic.Step();
         }
 
@@ -225,15 +226,10 @@ namespace PIC16F84_Emulator
                 Dialogs.ShowNoFileDialog();
                 return;
             }
-            if (RunTimer.Enabled == false)
-                RunTimer.Start();
+            if (Pic.RunTimer.Enabled == false)
+                Pic.RunTimer.Start();
             else
-                RunTimer.Stop();
-        }
-
-        private void RunTimer_Tick(object sender, EventArgs e)
-        {
-            Pic.Step();
+                Pic.RunTimer.Stop();
         }
 
         private void interruptToolStripMenuItem_Click(object sender, EventArgs e)

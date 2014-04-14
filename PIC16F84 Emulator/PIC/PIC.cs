@@ -7,6 +7,7 @@ using PIC16F84_Emulator.PIC.Data;
 using PIC16F84_Emulator.PIC.IO;
 using System.IO;
 using PIC16F84_Emulator.PIC.Functions;
+using System.Windows.Forms;
 
 namespace PIC16F84_Emulator.PIC
 {
@@ -15,6 +16,8 @@ namespace PIC16F84_Emulator.PIC
         public RegisterFileMap RegisterMap;
         public DataAdapter<byte> WRegister = new DataAdapter<byte>();
         public StackData Stack = new StackData();
+
+        public List<int> Breakpoints = new List<int>();
 
         public BaseFunction[] Functions;
 
@@ -29,8 +32,13 @@ namespace PIC16F84_Emulator.PIC
 
         public bool RunInterrupt = false;
 
+        public Timer RunTimer = new Timer();
+
         public PIC(string Sourcefile)
         {
+            RunTimer.Tick += RunTimer_Tick;
+            RunTimer.Interval = 1;
+
             RegisterMap = new RegisterFileMap(this);
 
             //Einlesen der lst Datei
@@ -42,7 +50,7 @@ namespace PIC16F84_Emulator.PIC
             SourceCode = new SourceCodeLine[LSTLines.Length];
             List<BytecodeLine> ByteCode = new List<BytecodeLine>();
 
-            for(int X = 0; X < SourceCode.Length; X++)
+            for (int X = 0; X < SourceCode.Length; X++)
             {
                 SourceCode[X] = new SourceCodeLine(LSTLines[X]);
                 if (LSTLines[X].ContainsBytecode)
@@ -88,14 +96,32 @@ namespace PIC16F84_Emulator.PIC
             this.Functions = Functions.ToArray();
         }
 
+        private void RunTimer_Tick(object sender, EventArgs e)
+        {
+            int PC = RegisterMap.ProgrammCounter;
+            if (PC < ByteCode.Length)
+            {
+                int SourceCodeIndex = ByteCode[PC].SourceCodeLineIndex;
+                foreach (int I in Breakpoints)
+                {
+                    if (I == SourceCodeIndex)
+                    {
+                        RunTimer.Stop();
+                        return;
+                    }
+                }
+                Step();
+            }
+        }
+
         /// <summary>
         /// Überprüft ob der Interrupt ausgeführt werden soll
         /// </summary>
         private void CheckInterrupt()
         {
-            if(RegisterMap.GlobalInterruptEnable) // Interrupt angeschaltet
+            if (RegisterMap.GlobalInterruptEnable) // Interrupt angeschaltet
             {
-                if(RegisterMap.RB0ExternalInterrupt && RegisterMap.RB0ExternalInterruptEnable) // RB0 interrupt gesetzt und aktiv
+                if (RegisterMap.RB0ExternalInterrupt && RegisterMap.RB0ExternalInterruptEnable) // RB0 interrupt gesetzt und aktiv
                 {
                     DoInterrupt();
                 }
@@ -109,6 +135,7 @@ namespace PIC16F84_Emulator.PIC
         private void DoInterrupt()
         {
             Stack.Push(RegisterMap.ProgrammCounter);
+            RegisterMap.GlobalInterruptEnable = false;
             RegisterMap.ProgrammCounter = 0x4;
         }
 
@@ -119,8 +146,10 @@ namespace PIC16F84_Emulator.PIC
         public void Step()
         {
             int PC = RegisterMap.ProgrammCounter;
-            if(PC < ByteCode.Length)
+            if (PC < ByteCode.Length)
+            {
                 ExecuteFunction(ByteCode[PC].Command, ByteCode[PC]);
+            }
 
             if (RunInterrupt) // Interrupt soll überprüft werden
                 CheckInterrupt();
@@ -133,11 +162,11 @@ namespace PIC16F84_Emulator.PIC
         /// <param name="Line">Zu Befehl gehörige Zeile</param>
         private void ExecuteFunction(int Command, BytecodeLine Line)
         {
-            for(int X= 0;X < Functions.Length; X++)
+            for (int X = 0; X < Functions.Length; X++)
             {
-                if(Functions[X].Match(Command))
+                BaseFunction Func = Functions[X];
+                if (Func.Match(Command))
                 {
-                    BaseFunction Func = Functions[X];
                     Func.Execute(this, Line);
                     int Cycles = Func.Cycles;
                     Runtime.Value += Cycles;

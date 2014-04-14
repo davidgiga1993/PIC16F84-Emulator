@@ -34,7 +34,7 @@ namespace PIC16F84_Emulator.PIC.Functions
         /// </summary>
         /// <param name="Line">Aktuelle Bytecode Zeile</param>
         /// <returns></returns>
-        public virtual bool Match(BytecodeLine Line)
+        public bool Match(BytecodeLine Line)
         {
             return Match(Line.Command);
         }
