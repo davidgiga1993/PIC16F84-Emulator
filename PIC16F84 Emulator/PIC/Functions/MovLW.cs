@@ -15,7 +15,7 @@ namespace PIC16F84_Emulator.PIC.Functions
 
         public override bool Calculate(PIC Pic, Data.BytecodeLine Line, int Literal)
         {
-            int NewValue = Pic.WRegister.Value | Literal;
+            int NewValue = Literal;
             Pic.RegisterMap.ZeroBit = NewValue == 0;
             Pic.WRegister.Value = (byte)NewValue;
             return true;

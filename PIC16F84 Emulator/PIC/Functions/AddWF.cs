@@ -15,8 +15,9 @@ namespace PIC16F84_Emulator.PIC.Functions
         public override byte Calculate(PIC Pic, Data.BytecodeLine Line, byte Value)
         {
             int NewValue = Pic.WRegister.Value + Value;
+            
             Pic.RegisterMap.CarryBit = NewValue > 0xFF;
-            Pic.RegisterMap.DigitalCarryBit = NewValue > 0xF;
+            Pic.RegisterMap.DigitalCarryBit = ((Pic.WRegister.Value & 0xF) + (Value & 0xF)) > 0xF;
             return (byte)NewValue;
         }
     }
