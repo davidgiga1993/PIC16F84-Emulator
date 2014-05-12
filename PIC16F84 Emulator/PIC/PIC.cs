@@ -13,10 +13,22 @@ namespace PIC16F84_Emulator.PIC
 {
     public class PIC
     {
+        /// <summary>
+        /// Register
+        /// </summary>
         public RegisterFileMap RegisterMap;
+        /// <summary>
+        /// Working Register
+        /// </summary>
         public DataAdapter<byte> WRegister = new DataAdapter<byte>();
+        /// <summary>
+        /// Stack vom PIC
+        /// </summary>
         public StackData Stack = new StackData();
 
+        /// <summary>
+        /// Breakpoints von der UI
+        /// </summary>
         public List<int> Breakpoints = new List<int>();
 
         public BaseFunction[] Functions;

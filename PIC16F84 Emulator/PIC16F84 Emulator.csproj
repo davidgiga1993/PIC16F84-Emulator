@@ -80,6 +80,12 @@
     <Compile Include="FormStack.Designer.cs">
       <DependentUpon>FormStack.cs</DependentUpon>
     </Compile>
+    <Compile Include="FormTime.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormTime.Designer.cs">
+      <DependentUpon>FormTime.cs</DependentUpon>
+    </Compile>
     <Compile Include="PIC\Data\BytecodeLine.cs" />
     <Compile Include="PIC\Data\DataAdapter.cs" />
     <Compile Include="PIC\Data\Helper.cs" />
@@ -167,6 +173,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="FormStack.resx">
       <DependentUpon>FormStack.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormTime.resx">
+      <DependentUpon>FormTime.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
