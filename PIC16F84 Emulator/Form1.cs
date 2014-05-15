@@ -54,6 +54,18 @@ namespace PIC16F84_Emulator
             Register = ShowIORegister(new Point(Register.Location.X + Register.Width, Source.Location.Y + Source.Height + 10), 0x6, 0x86, "Port B");
 
             ShowWRegister(new Point(Register.Location.X + Register.Width, Source.Location.Y + Source.Height + 10));
+
+            FormTime Time = new FormTime(Pic);
+            Time.MdiParent = this;
+            Time.StartPosition = FormStartPosition.Manual;
+            Time.Location = new Point(0, Source.Location.Y + Source.Height + 10 + Register.Height);
+            Time.Show();
+
+            FormDebugActions Debug = new FormDebugActions(Pic);
+            Debug.MdiParent = this;
+            Debug.StartPosition = FormStartPosition.Manual;
+            Debug.Location = new Point(Time.Location.X + Time.Width, Source.Location.Y + Source.Height + 10 + Register.Height);
+            Debug.Show();
         }
 
         protected override void OnKeyDown(KeyEventArgs e)
@@ -254,6 +266,42 @@ namespace PIC16F84_Emulator
             FormStack S = new FormStack(Pic);
             S.MdiParent = this;
             S.Show();
+        }
+
+        private void timeToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (Pic == null)
+            {
+                Dialogs.ShowNoFileDialog();
+                return;
+            }
+            FormTime S = new FormTime(Pic);
+            S.MdiParent = this;
+            S.Show();
+        }
+
+        private void debugToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (Pic == null)
+            {
+                Dialogs.ShowNoFileDialog();
+                return;
+            }
+            FormDebugActions S = new FormDebugActions(Pic);
+            S.MdiParent = this;
+            S.Show();
+        }
+
+        private void hilfeToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            // TODO: PFAD ZUR PDF!!!!
+            System.Diagnostics.Process.Start("");
+        }
+
+        private void überToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            string Version = System.Reflection.Assembly.GetExecutingAssembly().GetName().Version.ToString();
+            MessageBox.Show("PIC16F84 Emulator" + Environment.NewLine + "von David Schumann und Simon Isele" + Environment.NewLine + "Version " + Version, "Info");
         }
     }
 }

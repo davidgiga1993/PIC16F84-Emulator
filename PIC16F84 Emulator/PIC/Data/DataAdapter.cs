@@ -17,6 +17,16 @@ namespace PIC16F84_Emulator.PIC.Data
 
         protected T _Data;
 
+        public DataAdapter()
+        {
+
+        }
+
+        public DataAdapter(T defaultValue)
+        {
+            _Data = defaultValue;
+        }
+
         public T Value
         {
             get

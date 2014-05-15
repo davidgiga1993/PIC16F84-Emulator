@@ -14,6 +14,23 @@ namespace PIC16F84_Emulator.PIC
     public class PIC
     {
         /// <summary>
+        /// Frequency of the crystal for the pic
+        /// </summary>
+        public DataAdapter<float> CrystalFrequency = new DataAdapter<float>(5);
+
+        /// <summary>
+        /// Type of the crystal frequency:
+        /// 0 = kHz
+        /// 1 = MHz
+        /// </summary>
+        public DataAdapter<int> CrystalFrequencyType = new DataAdapter<int>(1);
+                
+        /// <summary>
+        /// Time for one execution cyclus
+        /// </summary>
+        public DataAdapter<double> CycleTime = new DataAdapter<double>();
+
+        /// <summary>
         /// Register
         /// </summary>
         public RegisterFileMap RegisterMap;
@@ -31,23 +48,53 @@ namespace PIC16F84_Emulator.PIC
         /// </summary>
         public List<int> Breakpoints = new List<int>();
 
+        /// <summary>
+        /// Alle implementierten Funktionen des PICs
+        /// </summary>
         public BaseFunction[] Functions;
 
+        /// <summary>
+        /// Die Quellcodezeilen für den ByteCode
+        /// </summary>
         public SourceCodeLine[] SourceCode;
+        /// <summary>
+        /// Der geparste Bytecode
+        /// </summary>
         public BytecodeLine[] ByteCode;
 
+        /// <summary>
+        /// Der Pfad zur aktuell geladenen Datei
+        /// </summary>
         public string CurrentFile;
 
-        public bool Running = false;
-        public bool SingleStepMode = true;
-        public DataAdapter<int> Runtime = new DataAdapter<int>();
+        //public bool Running = false;
 
+        /// <summary>
+        /// True wenn kein Timer für die Ausführung benutzt wird
+        /// </summary>
+        public bool SingleStepMode = true;
+
+        /// <summary>
+        /// Aktuelle Laufzeit des Programms
+        /// </summary>
+        public DataAdapter<double> Runtime = new DataAdapter<double>();
+
+        /// <summary>
+        /// Gibt an ob ein Interrupt aktiviert ist
+        /// Wird in RegisterMap auf true gesetzt
+        /// </summary>
         public bool RunInterrupt = false;
 
+        /// <summary>
+        /// Timer für die automatische Ausführung
+        /// </summary>
         public Timer RunTimer = new Timer();
 
         public PIC(string Sourcefile)
         {
+            CrystalFrequencyType.DataChanged += _CrystalFrequencyType_DataChanged;
+            CrystalFrequency.DataChanged += _CrystalFrequency_DataChanged;
+
             RunTimer.Tick += RunTimer_Tick;
             RunTimer.Interval = 1;
 
@@ -106,6 +153,23 @@ namespace PIC16F84_Emulator.PIC
             Functions.Add(new XOrLW());
             Functions.Add(new XOrWF());
             this.Functions = Functions.ToArray();
+        }
+        /// <summary>
+        /// Setzt den PIC zurück
+        /// </summary>
+        public void Reset()
+        {
+            RegisterMap.Reset();
+        }
+
+        private void _CrystalFrequency_DataChanged(float Value, object Sender)
+        {
+            CalculateCyclusTime();
+        }
+
+        private void _CrystalFrequencyType_DataChanged(int Value, object Sender)
+        {
+            CalculateCyclusTime();
         }
 
         private void RunTimer_Tick(object sender, EventArgs e)
@@ -181,10 +245,15 @@ namespace PIC16F84_Emulator.PIC
                 {
                     Func.Execute(this, Line);
                     int Cycles = Func.Cycles;
-                    Runtime.Value += Cycles;
+                    Runtime.Value += Cycles * CycleTime.Value;
                     break;
                 }
             }
+        }
+
+        private void CalculateCyclusTime()
+        {
+            CycleTime.Value = 1.0 / (CrystalFrequency.Value * Math.Pow(10, CrystalFrequencyType.Value == 0 ? 3 : 6)) * 4;
         }
     }
 }

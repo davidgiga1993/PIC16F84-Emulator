@@ -16,6 +16,7 @@ namespace PIC16F84_Emulator.PIC.Register
 
         private static readonly int REG_STATUS_ADDRESS = 0x3;
         private static readonly int REG_INTCON_ADDRESS = 0xB;
+        private static readonly int REG_OPTIONS_ADDRESS = 0x81;
 
         private static readonly int REG_GIE_BIT = 7;
         private static readonly int REG_T0IE_BIT = 5;
@@ -101,14 +102,25 @@ namespace PIC16F84_Emulator.PIC.Register
                 }
             }
 
-            Data[0x6].DataChanged+=PortB_DataChanged;
+            Data[0x6].DataChanged += PortB_DataChanged;
+            Data[0x4].DataChanged += RegisterFileMap_DataChanged;
 
+            Reset();
+        }
+
+        /// <summary>
+        /// Setzt alle Register zurück
+        /// </summary>
+        public void Reset()
+        {
+            for (int X = 0; X < Data.Length; X++)
+            {
+                Data[X].Value = 0;
+            }
             Set(0x18, 0x3);
             Set(0xFF, 0x81);
             Set(0xFF, 0x85);
             Set(0xFF, 0x86);
-
-            Data[0x4].DataChanged += RegisterFileMap_DataChanged;
         }
 
 
@@ -293,6 +305,31 @@ namespace PIC16F84_Emulator.PIC.Register
                     Register = Helper.UnsetBit(REG_INTF_BIT, Register);
                 }
                 Set(Register, REG_INTCON_ADDRESS);
+            }
+        }
+
+        /// <summary>
+        /// Returns true if the prescaler is assigned to Timer0
+        /// Returns false if the prescaler is assigned to the WDT
+        /// </summary>
+        public bool Option_PSAAssigmentBit
+        {
+            get
+            {
+                return Helper.CheckBit(3, Get(REG_OPTIONS_ADDRESS));
+            }
+            set
+            {
+                byte Register = Get(REG_OPTIONS_ADDRESS);
+                if (value)
+                {
+                    Register = Helper.SetBit(3, Register);
+                }
+                else
+                {
+                    Register = Helper.UnsetBit(3, Register);
+                }
+                Set(Register, REG_OPTIONS_ADDRESS);
             }
         }
 
