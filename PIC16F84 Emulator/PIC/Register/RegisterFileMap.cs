@@ -16,10 +16,18 @@ namespace PIC16F84_Emulator.PIC.Register
 
         private static readonly int REG_STATUS_ADDRESS = 0x3;
         private static readonly int REG_INTCON_ADDRESS = 0xB;
-        private static readonly int REG_OPTIONS_ADDRESS = 0x81;
+        public static readonly int REG_TIMER_ADDRESS = 0x1;
+        public static readonly int REG_OPTIONS_ADDRESS = 0x81;
+
+        public static readonly int REG_PORT_A = 0x5;
+
+        public static readonly int REG_OPTIONS_PRESCALER_ASSIGMENT = 3;
+        public static readonly int REG_OPTIONS_TIMER_MODE = 5;
+        public static readonly int REG_OPTIONS_TIMER_SOURCE_EDGE = 4;
 
         private static readonly int REG_GIE_BIT = 7;
         private static readonly int REG_T0IE_BIT = 5;
+        private static readonly int REG_T0IF_BIT = 2;
         private static readonly int REG_INTE_BIT = 4;
         private static readonly int REG_INTF_BIT = 1;
 
@@ -214,16 +222,16 @@ namespace PIC16F84_Emulator.PIC.Register
         {
             get
             {
-                return Helper.CheckBit(REG_DC_BIT, Get(REG_STATUS_ADDRESS));
+                return Helper.CheckBit(REG_DC_BIT, Get(REG_STATUS_ADDRESS, true));
             }
             set
             {
-                byte Register = Get(REG_STATUS_ADDRESS);
+                byte Register = Get(REG_STATUS_ADDRESS, true);
                 if (value)
                     Register = Helper.SetBit(REG_DC_BIT, Register);
                 else
                     Register = Helper.UnsetBit(REG_DC_BIT, Register);
-                Set(Register, REG_STATUS_ADDRESS);
+                Set(Register, REG_STATUS_ADDRESS, true);
             }
         }
 
@@ -231,16 +239,38 @@ namespace PIC16F84_Emulator.PIC.Register
         {
             get
             {
-                return Helper.CheckBit(REG_GIE_BIT, Get(REG_INTCON_ADDRESS));
+                return Helper.CheckBit(REG_GIE_BIT, Get(REG_INTCON_ADDRESS, true));
             }
             set
             {
-                byte Register = Get(REG_INTCON_ADDRESS);
+                byte Register = Get(REG_INTCON_ADDRESS, true);
                 if (value)
                     Register = Helper.SetBit(REG_GIE_BIT, Register);
                 else
                     Register = Helper.UnsetBit(REG_GIE_BIT, Register);
-                Set(Register, REG_INTCON_ADDRESS);
+                Set(Register, REG_INTCON_ADDRESS, true);
+            }
+        }
+
+        public bool TMR0Overflow
+        {
+            get
+            {
+                return Helper.CheckBit(REG_T0IF_BIT, Get(REG_INTCON_ADDRESS, true));
+            }
+            set
+            {
+                byte Register = Get(REG_INTCON_ADDRESS, true);
+                if(value)
+                {
+                    Register = Helper.SetBit(REG_T0IF_BIT, Register);
+                    Pic.RunInterrupt = true; // Interrupt in nächstem Zyklus überprüfen
+                }
+                else
+                {
+                    Register = Helper.UnsetBit(REG_T0IF_BIT, Register);
+                }
+                Set(Register, REG_INTCON_ADDRESS, true);
             }
         }
 
@@ -248,11 +278,11 @@ namespace PIC16F84_Emulator.PIC.Register
         {
             get
             {
-                return Helper.CheckBit(REG_T0IE_BIT, Get(REG_INTCON_ADDRESS));
+                return Helper.CheckBit(REG_T0IE_BIT, Get(REG_INTCON_ADDRESS, true));
             }
             set
             {
-                byte Register = Get(REG_INTCON_ADDRESS);
+                byte Register = Get(REG_INTCON_ADDRESS, true);
                 if (value)
                 {
                     Register = Helper.SetBit(REG_T0IE_BIT, Register);
@@ -261,7 +291,7 @@ namespace PIC16F84_Emulator.PIC.Register
                 {
                     Register = Helper.UnsetBit(REG_T0IE_BIT, Register);
                 }
-                Set(Register, REG_INTCON_ADDRESS);
+                Set(Register, REG_INTCON_ADDRESS, true);
             }
         }
 
@@ -269,16 +299,16 @@ namespace PIC16F84_Emulator.PIC.Register
         {
             get
             {
-                return Helper.CheckBit(REG_INTE_BIT, Get(REG_INTCON_ADDRESS));
+                return Helper.CheckBit(REG_INTE_BIT, Get(REG_INTCON_ADDRESS, true));
             }
             set
             {
-                byte Register = Get(REG_INTCON_ADDRESS);
+                byte Register = Get(REG_INTCON_ADDRESS, true);
                 if (value)
                     Register = Helper.SetBit(REG_INTE_BIT, Register);
                 else
                     Register = Helper.UnsetBit(REG_INTE_BIT, Register);
-                Set(Register, REG_INTCON_ADDRESS);
+                Set(Register, REG_INTCON_ADDRESS, true);
             }
         }
 
@@ -289,11 +319,11 @@ namespace PIC16F84_Emulator.PIC.Register
         {
             get
             {
-                return Helper.CheckBit(REG_INTF_BIT, Get(REG_INTCON_ADDRESS));
+                return Helper.CheckBit(REG_INTF_BIT, Get(REG_INTCON_ADDRESS, true));
             }
             set
             {
-                byte Register = Get(REG_INTCON_ADDRESS);
+                byte Register = Get(REG_INTCON_ADDRESS, true);
                 if (value)
                 {
                     if (!Helper.CheckBit(REG_INTF_BIT, Register)) // Auf positive Flanke überprüfen
@@ -304,34 +334,86 @@ namespace PIC16F84_Emulator.PIC.Register
                 { 
                     Register = Helper.UnsetBit(REG_INTF_BIT, Register);
                 }
-                Set(Register, REG_INTCON_ADDRESS);
+                Set(Register, REG_INTCON_ADDRESS, true);
             }
         }
 
+
         /// <summary>
-        /// Returns true if the prescaler is assigned to Timer0
-        /// Returns false if the prescaler is assigned to the WDT
+        /// Returns false if the prescaler is assigned to Timer0.
+        /// Returns true if the prescaler is assigned to the WDT
         /// </summary>
         public bool Option_PSAAssigmentBit
         {
             get
             {
-                return Helper.CheckBit(3, Get(REG_OPTIONS_ADDRESS));
+                return Helper.CheckBit(REG_OPTIONS_PRESCALER_ASSIGMENT, Get(REG_OPTIONS_ADDRESS, true));
             }
             set
             {
-                byte Register = Get(REG_OPTIONS_ADDRESS);
+                byte Register = Get(REG_OPTIONS_ADDRESS, true);
                 if (value)
                 {
-                    Register = Helper.SetBit(3, Register);
+                    Register = Helper.SetBit(REG_OPTIONS_PRESCALER_ASSIGMENT, Register);
                 }
                 else
                 {
-                    Register = Helper.UnsetBit(3, Register);
+                    Register = Helper.UnsetBit(REG_OPTIONS_PRESCALER_ASSIGMENT, Register);
                 }
-                Set(Register, REG_OPTIONS_ADDRESS);
+                Set(Register, REG_OPTIONS_ADDRESS, true);
             }
         }
+
+        /// <summary>
+        /// Returns true if RA4/T0CKI pin.
+        /// Returns false if CLKOUT pin
+        /// </summary>
+        public bool Option_Timer_Mode
+        {
+            get
+            {
+                return Helper.CheckBit(REG_OPTIONS_TIMER_MODE, Get(REG_OPTIONS_ADDRESS, true));
+            }
+            set
+            {
+                byte Register = Get(REG_OPTIONS_ADDRESS, true);
+                if (value)
+                {
+                    Register = Helper.SetBit(REG_OPTIONS_TIMER_MODE, Register);
+                }
+                else
+                {
+                    Register = Helper.UnsetBit(REG_OPTIONS_TIMER_MODE, Register);
+                }
+                Set(Register, REG_OPTIONS_ADDRESS, true);
+            }
+        }
+
+        /// <summary>
+        /// True wenn Edge 1 -> 0.
+        /// False wenn Edge 0 -> 1
+        /// </summary>
+        public bool Option_Timer_Source_Edge
+        {
+            get
+            {
+                return Helper.CheckBit(REG_OPTIONS_TIMER_SOURCE_EDGE, Get(REG_OPTIONS_ADDRESS, true));
+            }
+            set
+            {
+                byte Register = Get(REG_OPTIONS_ADDRESS, true);
+                if (value)
+                {
+                    Register = Helper.SetBit(REG_OPTIONS_TIMER_SOURCE_EDGE, Register);
+                }
+                else
+                {
+                    Register = Helper.UnsetBit(REG_OPTIONS_TIMER_SOURCE_EDGE, Register);
+                }
+                Set(Register, REG_OPTIONS_ADDRESS, true);
+            }
+        }
+        
 
         /// <summary>
         /// Port B hat sich geändert
@@ -368,8 +450,14 @@ namespace PIC16F84_Emulator.PIC.Register
         /// <param name="Position">Register Adresse</param>
         public void Set(byte Data, int Position)
         {
-            if (IsBank1())
-                Position += 0x80;
+            Set(Data, Position, false);
+        }
+
+        public void Set(byte Data, int Position, bool IgnoreBankBit)
+        {
+            if (!IgnoreBankBit)
+                if (IsBank1())
+                    Position += 0x80;
 
             Position = Mapping[Position];
             switch (Position)
@@ -390,10 +478,14 @@ namespace PIC16F84_Emulator.PIC.Register
         /// <returns>Register Daten</returns>
         public byte Get(int Position)
         {
-            if (IsBank1())
-                Position += 0x80;
+            return Get(Position, false);
+        }
+        public byte Get(int Position, bool IgnoreBankBit)
+        {
+            if (!IgnoreBankBit)
+                if (IsBank1())
+                    Position += 0x80;
             Position = Mapping[Position];
-
             return Data[Position].Value;
         }
 

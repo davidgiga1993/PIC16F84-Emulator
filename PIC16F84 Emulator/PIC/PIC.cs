@@ -88,7 +88,9 @@ namespace PIC16F84_Emulator.PIC
         /// <summary>
         /// Timer für die automatische Ausführung
         /// </summary>
-        public Timer RunTimer = new Timer();
+        public System.Windows.Forms.Timer RunTimer = new System.Windows.Forms.Timer();
+
+        public Timer.Timer0 TMR0;
 
         public PIC(string Sourcefile)
         {
@@ -96,7 +98,7 @@ namespace PIC16F84_Emulator.PIC
             CrystalFrequency.DataChanged += _CrystalFrequency_DataChanged;
 
             RunTimer.Tick += RunTimer_Tick;
-            RunTimer.Interval = 1;
+            RunTimer.Interval = 5;
 
             RegisterMap = new RegisterFileMap(this);
 
@@ -153,13 +155,17 @@ namespace PIC16F84_Emulator.PIC
             Functions.Add(new XOrLW());
             Functions.Add(new XOrWF());
             this.Functions = Functions.ToArray();
+            TMR0 = new Timer.Timer0(this);
         }
         /// <summary>
         /// Setzt den PIC zurück
         /// </summary>
         public void Reset()
         {
+            RunTimer.Stop();
             RegisterMap.Reset();
+            Runtime.Value = 0;
+            WRegister.Value = 0;
         }
 
         private void _CrystalFrequency_DataChanged(float Value, object Sender)
@@ -197,7 +203,7 @@ namespace PIC16F84_Emulator.PIC
         {
             if (RegisterMap.GlobalInterruptEnable) // Interrupt angeschaltet
             {
-                if (RegisterMap.RB0ExternalInterrupt && RegisterMap.RB0ExternalInterruptEnable) // RB0 interrupt gesetzt und aktiv
+                if ((RegisterMap.RB0ExternalInterrupt && RegisterMap.RB0ExternalInterruptEnable)||(RegisterMap.TMR0OverflowInterruptEnable && RegisterMap.TMR0Overflow)) // RB0 interrupt gesetzt und aktiv oder TMR 0 interrupt gesetzt und overflow
                 {
                     DoInterrupt();
                 }
@@ -245,7 +251,11 @@ namespace PIC16F84_Emulator.PIC
                 {
                     Func.Execute(this, Line);
                     int Cycles = Func.Cycles;
-                    Runtime.Value += Cycles * CycleTime.Value;
+                    for (int C = 0; C < Cycles; C++)
+                    {
+                        TMR0.Tick();
+                    }
+                        Runtime.Value += Cycles * CycleTime.Value;
                     break;
                 }
             }
