@@ -303,5 +303,12 @@ namespace PIC16F84_Emulator
             string Version = System.Reflection.Assembly.GetExecutingAssembly().GetName().Version.ToString();
             MessageBox.Show("PIC16F84 Emulator" + Environment.NewLine + "von David Schumann und Simon Isele" + Environment.NewLine + "Version " + Version, "Info");
         }
+
+        private void comPortToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            FormComPort Form = new FormComPort(Pic);
+            Form.MdiParent = this;
+            Form.Show();
+        }
     }
 }

@@ -92,6 +92,11 @@ namespace PIC16F84_Emulator.PIC
 
         public Timer.Timer0 TMR0;
 
+        /// <summary>
+        /// Ist für die Kommunikation über den Com Port zuständig
+        /// </summary>
+        public SerialCom ComPort;
+
         public PIC(string Sourcefile)
         {
             CrystalFrequencyType.DataChanged += _CrystalFrequencyType_DataChanged;
@@ -154,8 +159,12 @@ namespace PIC16F84_Emulator.PIC
             Functions.Add(new SwapF());
             Functions.Add(new XOrLW());
             Functions.Add(new XOrWF());
+            Functions.Add(new RetFIE());
             this.Functions = Functions.ToArray();
+
             TMR0 = new Timer.Timer0(this);
+
+            ComPort = new SerialCom(this);
         }
         /// <summary>
         /// Setzt den PIC zurück

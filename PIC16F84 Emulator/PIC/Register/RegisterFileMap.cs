@@ -20,6 +20,9 @@ namespace PIC16F84_Emulator.PIC.Register
         public static readonly int REG_OPTIONS_ADDRESS = 0x81;
 
         public static readonly int REG_PORT_A = 0x5;
+        public static readonly int REG_PORT_B = 0x6;
+        public static readonly int REG_TRIS_A = 0x85;
+        public static readonly int REG_TRIS_B = 0x86;
 
         public static readonly int REG_OPTIONS_PRESCALER_ASSIGMENT = 3;
         public static readonly int REG_OPTIONS_TIMER_MODE = 5;
