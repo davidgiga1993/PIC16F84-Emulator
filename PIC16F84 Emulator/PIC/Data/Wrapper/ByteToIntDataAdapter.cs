@@ -32,7 +32,8 @@ namespace PIC16F84_Emulator.PIC.Data.Wrapper
 
         protected override void InternalValueChanged()
         {
-            Adapter.Value = (byte)_Data;
+            if(Adapter.Value != _Data)
+                Adapter.Value = (byte)_Data;
         }
     }
 }

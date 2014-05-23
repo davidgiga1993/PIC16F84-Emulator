@@ -53,7 +53,7 @@
             // 
             // buttonOpenClosePort
             // 
-            this.buttonOpenClosePort.Location = new System.Drawing.Point(103, 66);
+            this.buttonOpenClosePort.Location = new System.Drawing.Point(103, 39);
             this.buttonOpenClosePort.Name = "buttonOpenClosePort";
             this.buttonOpenClosePort.Size = new System.Drawing.Size(75, 23);
             this.buttonOpenClosePort.TabIndex = 2;
@@ -65,11 +65,11 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(288, 101);
+            this.ClientSize = new System.Drawing.Size(288, 75);
             this.Controls.Add(this.buttonOpenClosePort);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.comboBoxPorts);
-            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.SizableToolWindow;
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
             this.Name = "FormComPort";
             this.Text = "Com Port";
             this.ResumeLayout(false);

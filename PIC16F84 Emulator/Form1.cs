@@ -306,6 +306,11 @@ namespace PIC16F84_Emulator
 
         private void comPortToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            if (Pic == null)
+            {
+                Dialogs.ShowNoFileDialog();
+                return;
+            }
             FormComPort Form = new FormComPort(Pic);
             Form.MdiParent = this;
             Form.Show();

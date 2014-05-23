@@ -18,10 +18,14 @@ namespace PIC16F84_Emulator.UIElements
         protected override void OnCheckedChanged(EventArgs e)
         {
             base.OnCheckedChanged(e);
+            byte newValue = 0;
             if(Checked)
-                Adapter.Value = Helper.SetBit(BitPosition, Adapter.Value);
+                newValue = Helper.SetBit(BitPosition, Adapter.Value);
             else
-                Adapter.Value = Helper.UnsetBit(BitPosition, Adapter.Value);
+                newValue = Helper.UnsetBit(BitPosition, Adapter.Value);
+
+            if (Adapter.Value != newValue)
+                Adapter.Value = newValue;
         }
 
         /// <summary>
@@ -39,7 +43,14 @@ namespace PIC16F84_Emulator.UIElements
 
         private void Adapter_DataChanged(byte Value, object Sender)
         {
-            Checked = (Value & (1 << BitPosition)) != 0;
+            if (InvokeRequired)
+            {
+                BeginInvoke((MethodInvoker)delegate { Adapter_DataChanged(Value, Sender); });
+            }
+            else
+            {
+                Checked = (Value & (1 << BitPosition)) != 0;
+            }
         }
     }
 }

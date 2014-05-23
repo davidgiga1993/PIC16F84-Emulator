@@ -25,7 +25,14 @@ namespace PIC16F84_Emulator.UIElements
 
         private void Adapter_DataChanged(byte Value, object Sender)
         {
-            Text = Helper.CheckBit(BitPosition, Value) ? "I" : "O";
+            if (InvokeRequired)
+            {
+                BeginInvoke((MethodInvoker)delegate { Adapter_DataChanged(Value, Sender); });
+            }
+            else
+            {
+                Text = Helper.CheckBit(BitPosition, Value) ? "I" : "O";
+            }
         }
     }
 }

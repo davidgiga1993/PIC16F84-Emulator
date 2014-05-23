@@ -21,6 +21,16 @@ namespace PIC16F84_Emulator
             buttonOpenClosePort.Text = Pic.ComPort.Active ? "Stop" : "Start";
         }
 
+        protected override void OnClosing(CancelEventArgs e)
+        {
+            if(Pic.ComPort.Active)
+            {
+                e.Cancel = true;
+                MessageBox.Show("Port still open!", "Error", MessageBoxButtons.OK);                
+            }
+            base.OnClosing(e);
+        }
+
         private void buttonOpenClosePort_Click(object sender, EventArgs e)
         {
             if (Pic.ComPort.Active)

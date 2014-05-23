@@ -87,11 +87,18 @@ namespace PIC16F84_Emulator.UIElements
 
         private void Adapter_DataChanged(int Value, object Sender)
         {
-            Text = Value.ToString("X2");
-            if(EnableChangeColor)
+            if (InvokeRequired)
             {
-                BackColor = System.Drawing.Color.FromArgb(255, 170, 170);
-                ColorResetTimer.Start();
+                BeginInvoke((MethodInvoker)delegate { Adapter_DataChanged(Value, Sender); });
+            }
+            else
+            {
+                Text = Value.ToString("X2");
+                if (EnableChangeColor)
+                {
+                    BackColor = System.Drawing.Color.FromArgb(255, 170, 170);
+                    ColorResetTimer.Start();
+                }
             }
         }
 
