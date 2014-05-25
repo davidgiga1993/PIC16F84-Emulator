@@ -97,6 +97,11 @@ namespace PIC16F84_Emulator.PIC
         /// </summary>
         public SerialCom ComPort;
 
+        /// <summary>
+        /// EEPROM Daten
+        /// </summary>
+        public EEPROM.EEPROM EEProm;
+
         public PIC(string Sourcefile)
         {
             CrystalFrequencyType.DataChanged += _CrystalFrequencyType_DataChanged;
@@ -163,7 +168,7 @@ namespace PIC16F84_Emulator.PIC
             this.Functions = Functions.ToArray();
 
             TMR0 = new Timer.Timer0(this);
-
+            EEProm = new EEPROM.EEPROM(this);
             ComPort = new SerialCom(this);
         }
         /// <summary>
@@ -173,6 +178,8 @@ namespace PIC16F84_Emulator.PIC
         {
             RunTimer.Stop();
             RegisterMap.Reset();
+            EEProm.Reset();
+            TMR0.Reset();
             Runtime.Value = 0;
             WRegister.Value = 0;
         }
@@ -212,7 +219,15 @@ namespace PIC16F84_Emulator.PIC
         {
             if (RegisterMap.GlobalInterruptEnable) // Interrupt angeschaltet
             {
-                if ((RegisterMap.RB0ExternalInterrupt && RegisterMap.RB0ExternalInterruptEnable)||(RegisterMap.TMR0OverflowInterruptEnable && RegisterMap.TMR0Overflow)) // RB0 interrupt gesetzt und aktiv oder TMR 0 interrupt gesetzt und overflow
+                if (RegisterMap.RB0ExternalInterrupt && RegisterMap.RB0ExternalInterruptEnable) // RB0 interrupt gesetzt und aktiv 
+                {
+                    DoInterrupt();
+                }
+                else if(RegisterMap.TMR0OverflowInterruptEnable && RegisterMap.TMR0Overflow) // TMR 0 interrupt gesetzt und overflow
+                {
+                    DoInterrupt();
+                }
+                else if (RegisterMap.EEWriteCompleteInterrupt && EEProm.WriteComplete) // EEIE aktiviert und Schreibvorgang abgeschlossen
                 {
                     DoInterrupt();
                 }
@@ -244,6 +259,8 @@ namespace PIC16F84_Emulator.PIC
 
             if (RunInterrupt) // Interrupt soll überprüft werden
                 CheckInterrupt();
+
+            EEProm.Tick();
         }
 
         /// <summary>
@@ -262,7 +279,7 @@ namespace PIC16F84_Emulator.PIC
                     int Cycles = Func.Cycles;
                     for (int C = 0; C < Cycles; C++)
                     {
-                        TMR0.Tick();
+                        TMR0.Tick(false);
                     }
                         Runtime.Value += Cycles * CycleTime.Value;
                     break;

@@ -1,0 +1,75 @@
+                    00001           ;Programm zum Test des 16F84-Simulators.
+                    00002           ;Funktion: Beschreiben und Lesen des EEPROMs
+                    00003           ;(c) St. Lehmann   Ersterstellung: 11.05.2011
+                    00004           ;Definition einiger Symbole
+                    00005           
+                    00006           indirect equ       0
+                    00007           status   equ       03h
+                    00008           fsr      equ       04h
+                    00009           ra       equ       05h
+                    00010           rb       equ       06h
+                    00011           count    equ       0ch
+                    00012           eedata   equ       08h
+                    00013           eeaddr   equ       09h
+                    00014           eecon1   equ       08h                 ;auf Bank 1
+                    00015           eecon2   equ       09h                 ;auf Bank 1
+                    00016             
+                    00017           ;Definition des Prozessors
+                    00018           device    16F84
+                    00019             
+                    00020           ;Festlegen des Codebeginns
+                    00021           org       0
+                    00022  start      
+0000 3000           00023           movlw     0                   ;der EEPROM-Speicher von 0 bi
+0001 008C           00024           movwf     count
+                    00025  schreiben 
+0002 080C           00026           movf      count,w
+0003 0089           00027           movwf     eeaddr              ;diese Adresse soll beschrieb
+0004 3AFF           00028           xorlw     255                 ;Adresse invertieren
+0005 0088           00029           movwf     eedata              ;dieser Wert an obige Adresse
+                    00030             
+0006 1683           00031           bsf       status,5            ;auf Bank 1
+0007 1208           00032           bcf       eecon1,4            ;EEIF zurücksetzen, wird über
+0008 1508           00033           bsf       eecon1,2            ;WREN-Bit setzen, sonst kein 
+0009 1488           00034           bsf       eecon1,1            ;WR-Bit setzen
+                    00035             
+000A 3055           00036           movlw     55h                 ;State-Machine anwerfen
+000B 0089           00037           movwf     eecon2
+000C 30AA           00038           movlw     0AAh
+000D 0089           00039           movwf     eecon2              ;Schreibvorgang beginnt jetzt
+                    00040             
+                    00041  warte    
+000E 1E08           00042           btfss     eecon1,4            ;warte bis EEIF auf 1 ist    
+000F 280E           00043           goto      warte
+                    00044             
+0010 1108           00045           bcf       eecon1,2            ;WREN auf 0
+                    00046             
+0011 1283           00047           bcf       status,5            ;zurück auf Bank 0
+                    00048             
+0012 0A8C           00049           incf      count
+0013 080C           00050           movf      count,w             ;ist der Wert 40H erreicht
+0014 3C40           00051           sublw     40h       
+0015 1D03           00052           btfss     status,2            ;wenn 0, dann fertig
+0016 2802           00053           goto      schreiben
+                    00054             
+                    00055             
+0017 018C           00056           clrf      count               ;jetzt gesamten Speicher lese
+                    00057  lesen:     
+0018 080C           00058           movf      count,w
+0019 0089           00059           movwf     eeaddr
+                    00060             
+001A 1683           00061           bsf       status,5            ;auf Bank 1
+001B 1408           00062           bsf       eecon1,0            ;RD-Bit auf 1, wird vom PIC w
+001C 1283           00063           bcf       status,5            ;zurück auf Bank 0
+                    00064             
+001D 0808           00065           movf      eedata,w            ;Wert ins W-Register
+                    00066             
+001E 0A8C           00067           incf      count
+001F 080C           00068           movf      count,w             ;ist der Wert 40H erreicht
+0020 3C40           00069           sublw     40h       
+0021 1D03           00070           btfss     status,2            ;wenn 0, dann fertig
+0022 2818           00071           goto      lesen
+                    00072             
+                    00073  ende     
+0023 2823           00074           goto      ende         
+                    00075             

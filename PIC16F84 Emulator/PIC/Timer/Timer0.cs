@@ -9,12 +9,12 @@ namespace PIC16F84_Emulator.PIC.Timer
     {
         private PIC Pic;
 
-        private int  InternalCounter = 0;
+        private int  InternalCounter;
 
         private int PortALastValue;
 
-        private bool TMR0Event = false;
-        private int CycleSkipCount = 0;
+        private bool TMR0Event;
+        private int CycleSkipCount;
 
         public Timer0(PIC Pic)
         {
@@ -23,6 +23,15 @@ namespace PIC16F84_Emulator.PIC.Timer
             Pic.RegisterMap.GetAdapter(Register.RegisterFileMap.REG_PORT_A).DataChanged += PortA_DataChanged;
             Pic.RegisterMap.GetAdapter(Register.RegisterFileMap.REG_TIMER_ADDRESS).DataChanged += Timer0_DataChanged;
             PortALastValue = Pic.RegisterMap.GetAdapter(Register.RegisterFileMap.REG_PORT_A).Value & 0x4;
+
+            Reset();
+        }
+
+        public void Reset()
+        {
+            CycleSkipCount = 0;
+            TMR0Event = true;
+            InternalCounter = 0;
         }
 
         private void Timer0_DataChanged(byte Value, object Sender)
@@ -35,9 +44,9 @@ namespace PIC16F84_Emulator.PIC.Timer
 
         private void PortA_DataChanged(byte Value, object Sender)
         {
-            if((Value & 0x4) != PortALastValue)
+            if((Value & 0x10) != PortALastValue)
             {
-                if(PortALastValue == 0x4) // Bit hat sich von 1 nach 0 geändert
+                if(PortALastValue == 0x10) // Bit hat sich von 1 nach 0 geändert
                 {
                     TickPortA(0);
                 }
@@ -45,6 +54,7 @@ namespace PIC16F84_Emulator.PIC.Timer
                 {
                     TickPortA(1);
                 }
+                PortALastValue = Value & 0x10;
             }
         }
 
@@ -54,66 +64,61 @@ namespace PIC16F84_Emulator.PIC.Timer
         /// <param name="Mode">1 wenn rising, 0 wenn falling</param>
         private void TickPortA(int Mode)
         {
-            if(Pic.RegisterMap.Option_Timer_Mode)
+            if(Pic.RegisterMap.TMR0ClockSource)
             {
                 if(Mode == 1 && Pic.RegisterMap.Option_Timer_Source_Edge == false)
                 {
-                    Tick();
+                    Tick(true);
                 }
                 else if (Mode == 0 && Pic.RegisterMap.Option_Timer_Source_Edge == true)
                 {
-                    Tick();
+                    Tick(true);
                 }
             }
         }
 
         /// <summary>
-        /// Returns the prescaler Value
+        /// Gibt den Wert des Prescalers zurück
         /// </summary>
-        public byte prescalerValue
+        public byte Prescaler
         {
             get
             {
-                int power = (Pic.RegisterMap.Get(Register.RegisterFileMap.REG_OPTIONS_ADDRESS, true) & 0x07) + 1;
-                return (byte)(Math.Pow(2, power) - 1);
-            }
-            set
-            {
-                int arg1 = Pic.RegisterMap.Get(Register.RegisterFileMap.REG_OPTIONS_ADDRESS, true) & 0xF8;
-                int arg2 = value & 0x07;
-                Pic.RegisterMap.Set((byte)(arg1 | arg2), Register.RegisterFileMap.REG_OPTIONS_ADDRESS, true);
-
-                InternalCounter = 0;
+                int Potenz = (Pic.RegisterMap.Get(Register.RegisterFileMap.REG_OPTIONS_ADDRESS, true) & 0x07) + 1;
+                return (byte)(Math.Pow(2, Potenz) - 1);
             }
         }
-
+        
         /// <summary>
-        /// Wird bei jedem Takt aufgerufen
+        /// Wird bei jedem Takt aufgerufen oder durch ein Tick von Port A4
         /// </summary>
-        public void Tick()
+        /// <param name="Force">Überpringt ClockSource Überprüfung</param>
+        public void Tick(bool Force)
         {
             if (CycleSkipCount > 0)
             {
                 CycleSkipCount--;
                 return;
             }
-
-            if (Pic.RegisterMap.Option_PSAAssigmentBit == false)
+            if (Force || !Pic.RegisterMap.TMR0ClockSource)
             {
-                if (InternalCounter >= prescalerValue)
+                if (Pic.RegisterMap.PrescalerAssignment == false)
+                {
+                    if (InternalCounter >= Prescaler)
+                    {
+                        InternalCounter = 0;
+                        Timer0Increment();
+                    }
+                    else
+                    {
+                        InternalCounter++;
+                    }
+                }
+                else
                 {
                     InternalCounter = 0;
                     Timer0Increment();
                 }
-                else
-                {
-                    InternalCounter++;
-                }
-            }
-            else
-            {
-                InternalCounter = 0;
-                Timer0Increment();
             }
         }
 

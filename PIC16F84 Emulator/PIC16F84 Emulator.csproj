@@ -106,6 +106,7 @@
     <Compile Include="PIC\Data\StackData.cs" />
     <Compile Include="PIC\Data\Wrapper\ByteToIntDataAdapter.cs" />
     <Compile Include="PIC\Data\Wrapper\IntToByteDataAdapter.cs" />
+    <Compile Include="PIC\EEPROM\EEPROM.cs" />
     <Compile Include="PIC\Functions\AddLW.cs" />
     <Compile Include="PIC\Functions\AndLW.cs" />
     <Compile Include="PIC\Functions\BaseLiteralFunction.cs" />

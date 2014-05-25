@@ -35,10 +35,10 @@ namespace PIC16F84_Emulator.PIC.Data
             }
             set
             {
-                    _Data = value;
-                    InternalValueChanged();
-                    if (DataChanged != null)
-                        DataChanged(value, this);                
+                _Data = value;
+                InternalValueChanged();
+                if (DataChanged != null)
+                    DataChanged(value, this);
             }
         }
 

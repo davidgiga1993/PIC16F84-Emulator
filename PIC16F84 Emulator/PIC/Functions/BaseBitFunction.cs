@@ -23,9 +23,9 @@ namespace PIC16F84_Emulator.PIC.Functions
             int BitPosition = (Command >> 7) & 0x7;
 
             byte Value = Pic.RegisterMap.Get(RegAddress);
-            Value = Calculate(Pic, Line, Value, BitPosition);
-
-            Pic.RegisterMap.Set(Value, RegAddress);
+            byte NewValue = Calculate(Pic, Line, Value, BitPosition);
+            if(Value != NewValue)
+                Pic.RegisterMap.Set(NewValue, RegAddress);
 
             Pic.RegisterMap.ProgrammCounter++;
         }

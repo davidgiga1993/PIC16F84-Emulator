@@ -19,6 +19,11 @@ namespace PIC16F84_Emulator.PIC.Register
         public static readonly int REG_TIMER_ADDRESS = 0x1;
         public static readonly int REG_OPTIONS_ADDRESS = 0x81;
 
+        public static readonly int REG_EEDATA_ADDRESS = 0x08;
+        public static readonly int REG_EEADDR_ADDRESS = 0x09;
+        public static readonly int REG_EECON1_ADDRESS = 0x88;
+        public static readonly int REG_EECON2_ADDRESS = 0x89;
+
         public static readonly int REG_PORT_A = 0x5;
         public static readonly int REG_PORT_B = 0x6;
         public static readonly int REG_TRIS_A = 0x85;
@@ -29,6 +34,7 @@ namespace PIC16F84_Emulator.PIC.Register
         public static readonly int REG_OPTIONS_TIMER_SOURCE_EDGE = 4;
 
         private static readonly int REG_GIE_BIT = 7;
+        private static readonly int REG_EEIE_BIT = 6;
         private static readonly int REG_T0IE_BIT = 5;
         private static readonly int REG_T0IF_BIT = 2;
         private static readonly int REG_INTE_BIT = 4;
@@ -283,19 +289,6 @@ namespace PIC16F84_Emulator.PIC.Register
             {
                 return Helper.CheckBit(REG_T0IE_BIT, Get(REG_INTCON_ADDRESS, true));
             }
-            set
-            {
-                byte Register = Get(REG_INTCON_ADDRESS, true);
-                if (value)
-                {
-                    Register = Helper.SetBit(REG_T0IE_BIT, Register);
-                }
-                else
-                {
-                    Register = Helper.UnsetBit(REG_T0IE_BIT, Register);
-                }
-                Set(Register, REG_INTCON_ADDRESS, true);
-            }
         }
 
         public bool RB0ExternalInterruptEnable
@@ -303,15 +296,6 @@ namespace PIC16F84_Emulator.PIC.Register
             get
             {
                 return Helper.CheckBit(REG_INTE_BIT, Get(REG_INTCON_ADDRESS, true));
-            }
-            set
-            {
-                byte Register = Get(REG_INTCON_ADDRESS, true);
-                if (value)
-                    Register = Helper.SetBit(REG_INTE_BIT, Register);
-                else
-                    Register = Helper.UnsetBit(REG_INTE_BIT, Register);
-                Set(Register, REG_INTCON_ADDRESS, true);
             }
         }
 
@@ -340,13 +324,23 @@ namespace PIC16F84_Emulator.PIC.Register
                 Set(Register, REG_INTCON_ADDRESS, true);
             }
         }
+        /// <summary>
+        /// EEIE Interrupt Enable bit
+        /// </summary>
+        public bool EEWriteCompleteInterrupt
+        {
+            get
+            {
+                return Helper.CheckBit(REG_EEIE_BIT, Get(REG_INTCON_ADDRESS, true));
+            }
+        }
 
 
         /// <summary>
         /// Returns false if the prescaler is assigned to Timer0.
         /// Returns true if the prescaler is assigned to the WDT
         /// </summary>
-        public bool Option_PSAAssigmentBit
+        public bool PrescalerAssignment
         {
             get
             {
@@ -371,7 +365,7 @@ namespace PIC16F84_Emulator.PIC.Register
         /// Returns true if RA4/T0CKI pin.
         /// Returns false if CLKOUT pin
         /// </summary>
-        public bool Option_Timer_Mode
+        public bool TMR0ClockSource
         {
             get
             {
@@ -425,7 +419,7 @@ namespace PIC16F84_Emulator.PIC.Register
         /// <param name="Sender"></param>
         private void PortB_DataChanged(byte Value, object Sender)
         {
-            if(Helper.CheckBit(0, Value))
+            if(Helper.CheckBit(0, Value)) // Bit 0 gesetzt -> RB0ExtInterrupt setzen
             {
                 RB0ExternalInterrupt = true;
             }
