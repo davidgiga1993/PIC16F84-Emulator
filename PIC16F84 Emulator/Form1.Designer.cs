@@ -51,10 +51,10 @@
             this.pCRegisterToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.interruptToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.stackToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.comPortToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.hilfeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.überToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.comPortToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -108,6 +108,7 @@
             this.schließenToolStripMenuItem1.Name = "schließenToolStripMenuItem1";
             this.schließenToolStripMenuItem1.Size = new System.Drawing.Size(152, 22);
             this.schließenToolStripMenuItem1.Text = "Close";
+            this.schließenToolStripMenuItem1.Click += new System.EventHandler(this.schließenToolStripMenuItem1_Click);
             // 
             // runToolStripMenuItem
             // 
@@ -235,6 +236,13 @@
             this.stackToolStripMenuItem.Text = "Stack";
             this.stackToolStripMenuItem.Click += new System.EventHandler(this.stackToolStripMenuItem_Click);
             // 
+            // comPortToolStripMenuItem
+            // 
+            this.comPortToolStripMenuItem.Name = "comPortToolStripMenuItem";
+            this.comPortToolStripMenuItem.Size = new System.Drawing.Size(70, 20);
+            this.comPortToolStripMenuItem.Text = "Com Port";
+            this.comPortToolStripMenuItem.Click += new System.EventHandler(this.comPortToolStripMenuItem_Click);
+            // 
             // toolStripMenuItem1
             // 
             this.toolStripMenuItem1.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
@@ -258,13 +266,6 @@
             this.überToolStripMenuItem.Size = new System.Drawing.Size(99, 22);
             this.überToolStripMenuItem.Text = "Über";
             this.überToolStripMenuItem.Click += new System.EventHandler(this.überToolStripMenuItem_Click);
-            // 
-            // comPortToolStripMenuItem
-            // 
-            this.comPortToolStripMenuItem.Name = "comPortToolStripMenuItem";
-            this.comPortToolStripMenuItem.Size = new System.Drawing.Size(70, 20);
-            this.comPortToolStripMenuItem.Text = "Com Port";
-            this.comPortToolStripMenuItem.Click += new System.EventHandler(this.comPortToolStripMenuItem_Click);
             // 
             // Form1
             // 

@@ -42,6 +42,10 @@ namespace PIC16F84_Emulator.PIC.Data
             }
         }
 
+        /// <summary>
+        /// Wird aufgerufen bevor alle externen Events ausgelöst werden.
+        /// Kann für Wrapper verwendet werden
+        /// </summary>
         protected virtual void InternalValueChanged()
         {
 

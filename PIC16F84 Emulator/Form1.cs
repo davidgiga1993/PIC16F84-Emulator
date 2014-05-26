@@ -15,7 +15,7 @@ namespace PIC16F84_Emulator
     public partial class Form1 : Form
     {
         protected PIC.PIC Pic;
-        
+                
         public Form1()
         {
             InitializeComponent();
@@ -27,7 +27,8 @@ namespace PIC16F84_Emulator
         }
 
         /// <summary>
-        /// Wird aufgerufen wenn eine neue Datei geladen und gesparst wurde
+        /// Wird aufgerufen wenn eine neue Datei geladen und gesparst wurde.
+        /// -> Alle alten Fenster schließen und Oberfläche neu aufbauen
         /// </summary>
         private void HasNewSource()
         {
@@ -68,6 +69,10 @@ namespace PIC16F84_Emulator
             Debug.Show();
         }
 
+        /// <summary>
+        /// Tastenevents
+        /// </summary>
+        /// <param name="e"></param>
         protected override void OnKeyDown(KeyEventArgs e)
         {
             base.OnKeyDown(e);
@@ -219,7 +224,9 @@ namespace PIC16F84_Emulator
             Register.Show();
         }
 
-
+        /// <summary>
+        /// Führt ein Einzelnen Schritt im PIC aus.
+        /// </summary>
         private void SingleStep()
         {
             if (Pic == null)
@@ -311,9 +318,28 @@ namespace PIC16F84_Emulator
                 Dialogs.ShowNoFileDialog();
                 return;
             }
+
+            foreach (Form frm in this.MdiChildren)
+            {
+                if(frm is FormComPort)
+                { // Verhindert mehrfaches öffnen vom ComPort Fenster
+                    return;
+                }
+            }
+
             FormComPort Form = new FormComPort(Pic);
             Form.MdiParent = this;
             Form.Show();
+        }
+
+        /// <summary>
+        /// Schließen Option
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void schließenToolStripMenuItem1_Click(object sender, EventArgs e)
+        {
+            Application.Exit();
         }
     }
 }

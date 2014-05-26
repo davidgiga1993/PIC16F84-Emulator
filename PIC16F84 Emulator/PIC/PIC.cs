@@ -183,17 +183,31 @@ namespace PIC16F84_Emulator.PIC
             Runtime.Value = 0;
             WRegister.Value = 0;
         }
-
+        /// <summary>
+        /// Wird aufgerufen wenn sich die Quarz Frequenz geändert hat.
+        /// </summary>
+        /// <param name="Value"></param>
+        /// <param name="Sender"></param>
         private void _CrystalFrequency_DataChanged(float Value, object Sender)
         {
             CalculateCyclusTime();
         }
 
+        /// <summary>
+        /// Wird aufgerufen wenn sich die Quarz Frequenz Einheit geänder hat (0=kHz;1=MHz)
+        /// </summary>
+        /// <param name="Value"></param>
+        /// <param name="Sender"></param>
         private void _CrystalFrequencyType_DataChanged(int Value, object Sender)
         {
             CalculateCyclusTime();
         }
 
+        /// <summary>
+        /// Führt den Code in einem festen Zeitintervall aus
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void RunTimer_Tick(object sender, EventArgs e)
         {
             int PC = RegisterMap.ProgrammCounter;
@@ -286,7 +300,9 @@ namespace PIC16F84_Emulator.PIC
                 }
             }
         }
-
+        /// <summary>
+        /// Berechnet die Zeit für einen Zyklus anhand der Gegebenen Frequenz
+        /// </summary>
         private void CalculateCyclusTime()
         {
             CycleTime.Value = 1.0 / (CrystalFrequency.Value * Math.Pow(10, CrystalFrequencyType.Value == 0 ? 3 : 6)) * 4;

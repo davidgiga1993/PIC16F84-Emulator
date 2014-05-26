@@ -16,7 +16,13 @@ namespace PIC16F84_Emulator.PIC.EEPROM
 
         private byte[] Data = new byte[64];
 
+        /// <summary>
+        /// Statemaschine Zustand für Write Sequenz
+        /// </summary>
         private int EECon2Steps = 0;
+        /// <summary>
+        /// Write Action flag. Wenn != 0 wird gerade geschrieben
+        /// </summary>
         private int WriteInAction = 0;
         
 
@@ -33,6 +39,9 @@ namespace PIC16F84_Emulator.PIC.EEPROM
             EECon2.DataChanged += EECon2_DataChanged;
         }
 
+        /// <summary>
+        /// Setzt alle flags vom EEPROM zurück außer den Speicher(!)
+        /// </summary>
         public void Reset()
         {
             EECon2Steps = 0;
@@ -82,20 +91,25 @@ namespace PIC16F84_Emulator.PIC.EEPROM
             }
         }
 
+        /// <summary>
+        /// EECON1 Register hat sich geändert
+        /// </summary>
+        /// <param name="Value"></param>
+        /// <param name="Sender"></param>
         private void EECon1_DataChanged(byte Value, object Sender)
         {
-            if(Read)
-            {
+            if(Read) // Wenn Read flag gesetzt -> Daten Lesen
+            {// Read flag wird in "Tick" zurückgesetzt
                 int Index = EEAddr.Value;
                 EEData.Value = Data[Index];
             }
-            else if(Write)
+            else if(Write) // Write flag gesetzt -> Überprüfen ob WriteEnable und ob Statemaschine im korrektem Zustand
             {
                 if (WriteEnable && EECon2Steps == 2)
                 {
-                    WriteInAction = 1;
+                    WriteInAction = 1; // Alles ok -> Daten Schreiben in "Tick"
                 }
-                EECon2Steps = 0;
+                EECon2Steps = 0; // Statemaschine zurücksetzen
             }
         }
         /// <summary>
@@ -131,8 +145,15 @@ namespace PIC16F84_Emulator.PIC.EEPROM
                 {
                     EECon1.Value = (byte)(EECon1.Value & 0xFE);
                 }
+                else
+                {
+                    throw new NotSupportedException("Only = false possible");
+                }
             }
         }
+        /// <summary>
+        /// Write flag. Nur zurücksetzbar!
+        /// </summary>
         private bool Write
         {
             get
@@ -145,8 +166,16 @@ namespace PIC16F84_Emulator.PIC.EEPROM
                 {
                     EECon1.Value = (byte)(EECon1.Value & 0xFD);
                 }
+                else
+                {
+                    throw new NotSupportedException("Only = false possible");
+                }
             }
         }
+
+        /// <summary>
+        /// WriteEnable flag.
+        /// </summary>
         private bool WriteEnable
         {
             get

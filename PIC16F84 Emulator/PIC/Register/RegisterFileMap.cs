@@ -243,7 +243,9 @@ namespace PIC16F84_Emulator.PIC.Register
                 Set(Register, REG_STATUS_ADDRESS, true);
             }
         }
-
+        /// <summary>
+        /// Global Interrupt Enable flag
+        /// </summary>
         public bool GlobalInterruptEnable
         {
             get
@@ -260,7 +262,9 @@ namespace PIC16F84_Emulator.PIC.Register
                 Set(Register, REG_INTCON_ADDRESS, true);
             }
         }
-
+        /// <summary>
+        /// TMR0 Overflow flag
+        /// </summary>
         public bool TMR0Overflow
         {
             get
@@ -282,7 +286,9 @@ namespace PIC16F84_Emulator.PIC.Register
                 Set(Register, REG_INTCON_ADDRESS, true);
             }
         }
-
+        /// <summary>
+        /// TMR0 Overflow Interrupt Enable flag
+        /// </summary>
         public bool TMR0OverflowInterruptEnable
         {
             get
@@ -290,7 +296,9 @@ namespace PIC16F84_Emulator.PIC.Register
                 return Helper.CheckBit(REG_T0IE_BIT, Get(REG_INTCON_ADDRESS, true));
             }
         }
-
+        /// <summary>
+        /// RB0 External Interrupt Enable flag
+        /// </summary>
         public bool RB0ExternalInterruptEnable
         {
             get
@@ -443,13 +451,19 @@ namespace PIC16F84_Emulator.PIC.Register
         /// <summary>
         /// Setzt ein Register an der gegebenen Adresse
         /// </summary>
-        /// <param name="Data">Daten fürs Register</param>
+        /// <param name="Data">Daten für das Register</param>
         /// <param name="Position">Register Adresse</param>
         public void Set(byte Data, int Position)
         {
             Set(Data, Position, false);
         }
 
+        /// <summary>
+        /// Setzt ein Register an der gegebenen Adresse
+        /// </summary>
+        /// <param name="Data">Daten für das Register</param>
+        /// <param name="Position">Register Adresse</param>
+        /// <param name="IgnoreBankBit">Wenn true wird das Bit zum Bank umschalten ignoriert</param>
         public void Set(byte Data, int Position, bool IgnoreBankBit)
         {
             if (!IgnoreBankBit)
@@ -471,12 +485,18 @@ namespace PIC16F84_Emulator.PIC.Register
         /// <summary>
         /// Gibt ein Register zurück
         /// </summary>
-        /// <param name="Position">Register Adresse</param>
+        /// <param name="Position">Adresse des Registers</param>
         /// <returns>Register Daten</returns>
         public byte Get(int Position)
         {
             return Get(Position, false);
         }
+        /// <summary>
+        /// Gibt ein Register zurück
+        /// </summary>
+        /// <param name="Position">Adresse des Registers</param>
+        /// <param name="IgnoreBankBit">Wenn true wird das Bit zum Umschalten der Bank ignoriert</param>
+        /// <returns></returns>
         public byte Get(int Position, bool IgnoreBankBit)
         {
             if (!IgnoreBankBit)
@@ -486,6 +506,11 @@ namespace PIC16F84_Emulator.PIC.Register
             return Data[Position].Value;
         }
 
+        /// <summary>
+        /// Gibt ein Adapter für ein Register zurück
+        /// </summary>
+        /// <param name="Position">Adresse des Adapters</param>
+        /// <returns></returns>
         public DataAdapter<byte> GetAdapter(int Position)
         {
             Position = Mapping[Position];
