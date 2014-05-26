@@ -104,9 +104,7 @@ namespace PIC16F84_Emulator
 
             if (OFD.ShowDialog() == System.Windows.Forms.DialogResult.OK)
             {
-                //TODO: Change path
                 Pic = new PIC.PIC(OFD.FileName);
-                //Pic = new PIC.PIC(@"C:\Users\David\Documents\DH\Semester 3\Rechnerarchitektur\picsimu\BCDZahler.lst");
                 HasNewSource();
             }
         }
@@ -302,7 +300,7 @@ namespace PIC16F84_Emulator
         private void hilfeToolStripMenuItem_Click(object sender, EventArgs e)
         {
             // TODO: PFAD ZUR PDF!!!!
-            System.Diagnostics.Process.Start("");
+            System.Diagnostics.Process.Start(@"C:\Users\David\Documents\DH\Semester 3\Übersetzerbau\uebau-skript.pdf");
         }
 
         private void überToolStripMenuItem_Click(object sender, EventArgs e)
